@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>N E O — @iamneo80</title>
-    <meta name="description" content="N E O on X. 21,313 followers, 930,406 views." />
+    <meta name="description" content="N E O on X. 21,313 followers, 1,016,227 views." />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="N E O — @iamneo80" />
     <meta property="og:description" content="Posting on X. Nothing else, nowhere else." />
@@ -175,6 +175,31 @@
       .search-none { display: none; color: var(--muted); font-size: 14px; padding: 6px 2px 2px; }
       .search-none.show { display: block; }
 
+      /* Plain stats row (no card, no button) */
+      .stats-plain {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 20px;
+        padding: 0 4px;
+        font-size: 13.5px;
+        color: var(--muted);
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+      }
+      .stats-plain b { color: var(--ink); font-weight: 700; margin-left: 5px; font-variant-numeric: tabular-nums; }
+
+      /* Collections */
+      .collections { margin-top: 44px; }
+      .collections h2 {
+        font-size: 12px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--green);
+        margin-bottom: 16px;
+      }
+      .coll-sub { display: block; font-size: 12.5px; color: var(--muted); font-weight: 500; margin-top: 2px; letter-spacing: 0.02em; }
+
       /* About */
       .about { margin-top: 44px; }
       .about h2 {
@@ -187,12 +212,12 @@
       .about-card {
         background: var(--glass);
         border: 1px solid var(--glass-border);
-        border-radius: 20px;
-        padding: 22px 24px;
+        border-radius: 18px;
+        padding: 16px 18px;
         -webkit-backdrop-filter: blur(18px) saturate(160%);
         backdrop-filter: blur(18px) saturate(160%);
-        font-size: 16px;
-        line-height: 1.65;
+        font-size: 14.5px;
+        line-height: 1.6;
         color: var(--ink-soft, #c9d4ca);
       }
       .about-card strong { color: var(--ink); }
@@ -292,6 +317,8 @@
       .tagline strong { color: var(--ink); font-weight: 600; }
 
       /* Stats — iOS glass card */
+      .stat { text-align: center; }
+      .stat svg { width: 18px; height: 18px; color: var(--green); margin: 0 auto 7px; display: block; }
       .stats {
         display: flex;
         flex-wrap: wrap;
@@ -506,6 +533,7 @@
         .nav-links { gap: 14px; }
         .nav-links a { font-size: 12.5px; }
         .posts { margin-top: 32px; }
+        .collections { margin-top: 32px; }
         .about { margin-top: 32px; }
         .post-card { padding: 16px 18px; }
         .cta { margin-top: 28px; }
@@ -571,10 +599,24 @@
       <p class="tagline anim d3">Posting on <strong>X</strong>. Nothing else, nowhere else.</p>
 
       <div class="stats anim d4" id="stats" aria-label="X statistics">
-        <div class="stat"><span class="num" data-count="21313">21,313</span><span class="lbl">Followers</span></div>
-        <div class="stat"><span class="num" data-count="215">215</span><span class="lbl">Posts</span></div>
-        <div class="stat"><span class="num" data-count="930406">930,406</span><span class="lbl">Views</span></div>
+        <div class="stat"><span class="num">21K+</span><span class="lbl">Followers</span></div>
+        <div class="stat"><span class="num">215</span><span class="lbl">Posts</span></div>
+        <div class="stat"><span class="num">1M+</span><span class="lbl">Views</span></div>
       </div>
+
+      <section class="about anim d4" id="about" aria-label="About" style="margin-top:36px;">
+        <h2>About</h2>
+        <div class="about-card">
+          <p>Hello, I&rsquo;m <strong>NEO</strong>. I create NSFW video edits on <strong>X</strong>, transforming raw clips into fast, scroll-stopping content. Check out my account and follow if you enjoy the work.</p>
+        </div>
+      </section>
+
+      <div class="stats-plain anim d5" aria-label="Statistics in full">
+        <span>Followers <b>21313</b></span>
+        <span>Posts <b>215</b></span>
+        <span>Viewers <b>1016227</b></span>
+      </div>
+
 
       <section class="posts anim d5" id="posts" aria-label="Top posts">
         <h2>Top posts</h2>
@@ -606,6 +648,22 @@
         <p class="search-none" id="search-none">No posts match your search.</p>
       </section>
 
+
+      <section class="collections anim d6" id="collections" aria-label="Collections">
+        <h2>Collections</h2>
+        <a class="post-row" href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">
+          <span class="post-row-title">Mallu<span class="coll-sub">Collection</span></span>
+          <span class="view">View on X &rarr;</span>
+        </a>
+        <a class="post-row" href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">
+          <span class="post-row-title">Resmi Nair<span class="coll-sub">Collection</span></span>
+          <span class="view">View on X &rarr;</span>
+        </a>
+        <a class="post-row" href="https://x.com/iamneo80/status/2052163352231858537" target="_blank" rel="noopener noreferrer">
+          <span class="post-row-title">Insta vs Reality<span class="coll-sub">Collection</span></span>
+          <span class="view">View on X &rarr;</span>
+        </a>
+      </section>
 
       <div class="cta anim d6">
         <a class="btn" href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">
