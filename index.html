@@ -620,6 +620,19 @@
       .latest-watch { animation: watchPulse 2.6s ease-in-out infinite; }
       @keyframes watchPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } 50% { box-shadow: 0 0 16px 2px rgba(255, 255, 255, 0.22); } }
       @media (prefers-reduced-motion: reduce) { .latest-watch { animation: none; } .btn:active, .icon-btn:active, .to-top:active, .post-card:active, .coll-card:active, .latest-card:active { transform: none; } }
+    
+      /* Top posts: horizontal poster carousel */
+      .tp-strip { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 2px 8px; margin-top: 12px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+      .tp-strip::-webkit-scrollbar { display: none; }
+      .tp-strip .post-card { flex: 0 0 79%; scroll-snap-align: center; aspect-ratio: 9 / 14; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+      .tp-img { position: absolute; inset: 0; }
+      .tp-img picture { display: block; width: 100%; height: 100%; }
+      .tp-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .tp-strip .post-card.poster::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, 0.16), transparent 30%, transparent 52%, rgba(0, 0, 0, 0.8)); pointer-events: none; }
+      .tp-strip .post-card.poster .post-meta { position: relative; z-index: 1; margin-top: auto; border-top: none; padding-top: 0; }
+      .tp-dots { display: flex; gap: 6px; justify-content: center; margin-top: 4px; }
+      .tp-dots i { width: 6px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.25); }
+      .tp-dots i.on { width: 18px; background: #ffffff; }
     </style>
       <link rel="manifest" href="manifest.webmanifest" />
     <meta name="theme-color" content="#060807" />
@@ -709,53 +722,30 @@
 
       <section class="posts rv" id="posts" aria-label="Top posts">
         <h2>Top posts</h2>
-        <a class="post-card" href="https://x.com/iamneo80/status/2052163352231858537" target="_blank" rel="noopener noreferrer">
-          <div class="post-head">
-            <picture>
-              <source srcset="avatar.webp" type="image/webp" />
-              <img src="avatar.jpg" alt="" width="480" height="480" />
-            </picture>
-            <span class="pname">N E O</span>
-            <span class="phandle">@iamneo80</span>
-          </div>
-          <p class="post-text">INSTA vs Reality (part-03)</p>
-          <div class="post-meta">
-            <span>661.9K views &middot; 14.67K likes</span>
-            <span class="view">View on X</span>
-          </div>
-        </a>
-        <div class="post-cards">
-          <a class="post-card" href="https://x.com/iamneo80/status/2019715227202527493" target="_blank" rel="noopener noreferrer">
-            <div class="post-head">
-              <picture>
-                <source srcset="avatar.webp" type="image/webp" />
-                <img src="avatar.jpg" alt="" width="480" height="480" />
-              </picture>
-              <span class="pname">N E O</span>
-              <span class="phandle">@iamneo80</span>
-            </div>
-            <p class="post-text">Resmi NSFW (3)</p>
+        <div class="tp-strip">
+          <a class="post-card poster" data-name="insta vs reality (part-03)" href="https://x.com/iamneo80/status/2052163352231858537" target="_blank" rel="noopener noreferrer">
+            <span class="tp-img"><picture><source srcset="top1.webp" type="image/webp" /><img src="top1.jpg" alt="INSTA vs REALITY (part-03) poster" width="720" height="1280" style="object-position: center 12%;" /></picture></span>
             <div class="post-meta">
-              <span>463.9K views &middot; 2.8K likes</span>
+              <span>661.9K views &middot; 14.67K likes</span>
               <span class="view">View on X</span>
             </div>
           </a>
-          <a class="post-card" href="https://x.com/iamneo80/status/2050328989517119771" target="_blank" rel="noopener noreferrer">
-            <div class="post-head">
-              <picture>
-                <source srcset="avatar.webp" type="image/webp" />
-                <img src="avatar.jpg" alt="" width="480" height="480" />
-              </picture>
-              <span class="pname">N E O</span>
-              <span class="phandle">@iamneo80</span>
-            </div>
-            <p class="post-text">INSTA vs REALITY (part-02)</p>
+          <a class="post-card poster" data-name="insta vs reality (part-02)" href="https://x.com/iamneo80/status/2050328989517119771" target="_blank" rel="noopener noreferrer">
+            <span class="tp-img"><picture><source srcset="top3.webp" type="image/webp" /><img src="top3.jpg" alt="INSTA vs REALITY (part-02) poster" width="720" height="1280" style="object-position: center 88%;" /></picture></span>
             <div class="post-meta">
               <span>540K views &middot; 4.47K likes</span>
               <span class="view">View on X</span>
             </div>
           </a>
+          <a class="post-card poster" data-name="resmi nsfw edit (3)" href="https://x.com/iamneo80/status/2019715227202527493" target="_blank" rel="noopener noreferrer">
+            <span class="tp-img"><picture><source srcset="top2.webp" type="image/webp" /><img src="top2.jpg" alt="Resmi NSFW Edit (3) poster" width="720" height="1281" style="object-position: center 8%;" /></picture></span>
+            <div class="post-meta">
+              <span>463.9K views &middot; 2.8K likes</span>
+              <span class="view">View on X</span>
+            </div>
+          </a>
         </div>
+        <div class="tp-dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
         <p class="search-none" id="search-none">No posts match your search.</p>
       </section>
 
@@ -860,7 +850,7 @@
           var q = input.value.trim().toLowerCase();
           var visible = 0;
           items.forEach(function (el) {
-            var hit = !q || el.textContent.toLowerCase().indexOf(q) !== -1;
+            var hit = !q || (el.getAttribute('data-name') || '').toLowerCase().indexOf(q) !== -1 || el.textContent.toLowerCase().indexOf(q) !== -1;
             el.style.display = hit ? '' : 'none';
             if (hit) visible++;
           });
@@ -996,6 +986,28 @@
     </script>
     <script>
       if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(function () {}); }
+    </script>
+  
+    <script>
+      // Top posts carousel: keep the dots in sync while swiping
+      (function () {
+        var strip = document.querySelector('.tp-strip');
+        if (!strip) return;
+        var dots = document.querySelectorAll('.tp-dots i');
+        var cards = strip.querySelectorAll('.post-card');
+        function upd() {
+          if (!cards.length) return;
+          var w = cards[0].offsetWidth + 12;
+          var i = Math.round(strip.scrollLeft / w);
+          if (i < 0) i = 0;
+          if (i > dots.length - 1) i = dots.length - 1;
+          dots.forEach(function (d, j) { d.classList.toggle('on', j === i); });
+        }
+        var ticking = false;
+        strip.addEventListener('scroll', function () {
+          if (!ticking) { ticking = true; window.requestAnimationFrame(function () { upd(); ticking = false; }); }
+        }, { passive: true });
+      })();
     </script>
   </body>
 </html>
