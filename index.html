@@ -1,249 +1,170 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="description" content="Neo — personal web page." />
-    <link rel="icon" href="data:," />
-    <title>Neo</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neo — @iamneo80</title>
+    <meta name="description" content="Neo on X. 21,298 followers, 930,406 views." />
     <style>
       :root {
-        --bg: #f4f6f3;
-        --surface: #ffffff;
-        --ink: #17211c;
-        --ink-soft: #47554d;
-        --ink-faint: #718078;
-        --line: #dce3dc;
-        --accent: #14684a;
-        --accent-soft: #e3efe8;
-        --accent-ink: #0e4d36;
-        --ring: rgba(20, 104, 74, 0.16);
-        --shadow: 0 24px 60px rgba(23, 33, 28, 0.10), 0 4px 14px rgba(23, 33, 28, 0.06);
+        --bg: #060807;
+        --ink: #f2f5f2;
+        --muted: #9aa79c;
+        --line: rgba(255, 255, 255, 0.09);
+        --green: #3dff8e;
+        --green-dim: rgba(61, 255, 142, 0.12);
       }
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #101613;
-          --surface: #18201b;
-          --ink: #edf3ee;
-          --ink-soft: #b7c4bb;
-          --ink-faint: #85958a;
-          --line: #2a352d;
-          --accent: #4cc38a;
-          --accent-soft: #1d2f26;
-          --accent-ink: #8fe0b6;
-          --ring: rgba(76, 195, 138, 0.18);
-          --shadow: 0 24px 60px rgba(0, 0, 0, 0.45), 0 4px 14px rgba(0, 0, 0, 0.35);
-        }
-      }
-
-      * { box-sizing: border-box; }
-      html, body { margin: 0; padding: 0; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html { color-scheme: dark; }
       body {
         background: var(--bg);
         color: var(--ink);
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
-        line-height: 1.55;
-        min-height: 100svh;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: clamp(20px, 5vw, 56px) 18px 40px;
       }
-
       main {
         width: 100%;
-        max-width: 640px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
+        max-width: 880px;
+        padding: 72px 24px 40px;
+        flex: 1;
       }
 
-      /* ---------- Profile card ---------- */
-      .profile {
-        background: var(--surface);
-        border: 1px solid var(--line);
-        border-radius: 20px;
-        box-shadow: var(--shadow);
-        padding: clamp(36px, 7vw, 56px) clamp(22px, 6vw, 48px) clamp(32px, 6vw, 44px);
-        text-align: center;
-      }
-
-      .monogram {
-        width: 104px;
-        height: 104px;
-        margin: 0 auto 22px;
-        border-radius: 50%;
-        background: var(--accent-soft);
-        border: 1px solid var(--ring);
-        box-shadow: 0 0 0 6px var(--accent-soft);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
-        font-size: 52px;
-        font-weight: 600;
-        color: var(--accent-ink);
-        line-height: 1;
-        user-select: none;
-      }
-
-      h1 {
-        font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
-        font-size: clamp(44px, 10vw, 64px);
-        line-height: 1.05;
-        font-weight: 600;
-        letter-spacing: -0.01em;
-        margin: 0 0 10px;
-      }
-
-      .hello {
-        margin: 0 auto;
-        max-width: 38ch;
-        font-size: 17px;
-        color: var(--ink-soft);
-      }
-
-      .rule {
-        width: 44px;
-        height: 3px;
-        border-radius: 999px;
-        background: var(--accent);
-        margin: 26px auto 0;
-        opacity: 0.85;
-      }
-
-      /* ---------- Sections ---------- */
-      .section {
-        background: var(--surface);
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 24px clamp(20px, 5vw, 32px) 26px;
-      }
-
-      .section h2 {
-        font-size: 13px;
-        font-weight: 700;
-        letter-spacing: 0.12em;
+      /* Hero */
+      .kicker {
+        font-size: 12px;
+        letter-spacing: 0.32em;
         text-transform: uppercase;
-        color: var(--ink-faint);
-        margin: 0 0 12px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        color: var(--green);
+        margin-bottom: 18px;
       }
-      .section h2 svg {
-        flex: none;
-        color: var(--accent);
+      h1 {
+        font-size: clamp(72px, 18vw, 148px);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 0.95;
       }
+      h1 .dot { color: var(--green); }
+      .tagline {
+        margin-top: 20px;
+        font-size: clamp(17px, 3.4vw, 21px);
+        color: var(--muted);
+        max-width: 46ch;
+        line-height: 1.5;
+      }
+      .tagline strong { color: var(--ink); font-weight: 600; }
 
-      .empty {
-        margin: 0;
-        font-size: 15.5px;
-        color: var(--ink-soft);
-      }
-      .empty strong {
-        color: var(--ink);
-        font-weight: 600;
-      }
-
-      .photo {
-        width: 100%;
-        height: auto;
-        display: block;
-        border-radius: 12px;
-        border: 1px solid var(--line);
-      }
-
+      /* Stats */
       .stats {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0;
+        margin-top: 52px;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
       }
       .stat {
-        background: var(--accent-soft);
-        border: 1px solid var(--ring);
-        border-radius: 12px;
-        padding: 14px 10px;
-        text-align: center;
+        flex: 1 1 160px;
+        padding: 26px 8px 26px 0;
       }
+      .stat + .stat { padding-left: 28px; border-left: 1px solid var(--line); }
       .stat .num {
         display: block;
-        font-size: 22px;
+        font-size: clamp(30px, 6vw, 42px);
         font-weight: 700;
-        color: var(--accent-ink);
-        line-height: 1.2;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
       }
       .stat .lbl {
         display: block;
-        font-size: 12px;
-        letter-spacing: 0.08em;
+        margin-top: 6px;
+        font-size: 11px;
+        letter-spacing: 0.22em;
         text-transform: uppercase;
-        color: var(--ink-faint);
-        margin-top: 4px;
+        color: var(--muted);
       }
-      .xlink {
-        display: inline-block;
-        background: var(--accent);
-        color: #fff;
+
+      /* Photo */
+      .photo {
+        margin-top: 52px;
+      }
+      .photo img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+      }
+
+      /* CTA */
+      .cta { margin-top: 52px; }
+      .xbtn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--green);
+        color: #04140a;
         text-decoration: none;
-        font-weight: 600;
-        padding: 10px 18px;
+        font-weight: 700;
+        font-size: 16px;
+        padding: 14px 28px;
         border-radius: 999px;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        box-shadow: 0 0 0 0 var(--green-dim);
       }
+      .xbtn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -8px var(--green-dim); }
+      .xbtn svg { flex: none; }
 
       footer {
-        margin-top: 6px;
-        text-align: center;
+        width: 100%;
+        max-width: 880px;
+        padding: 0 24px 36px;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
         font-size: 13px;
-        color: var(--ink-faint);
+        color: var(--muted);
       }
-      footer .dot { margin: 0 6px; opacity: 0.6; }
+      footer a { color: var(--muted); text-decoration: none; }
+      footer a:hover { color: var(--green); }
 
-      @media (max-width: 420px) {
-        .monogram { width: 92px; height: 92px; font-size: 46px; }
-        .hello { font-size: 16px; }
+      @media (max-width: 560px) {
+        main { padding-top: 48px; }
+        .stat + .stat { padding-left: 18px; }
       }
     </style>
   </head>
   <body>
     <main>
-      <section class="profile" aria-label="Profile">
-        <div class="monogram" aria-hidden="true">N</div>
-        <h1>Neo</h1>
-        <p class="hello">Hello, I&rsquo;m Neo. Welcome to my corner of the web.</p>
-        <div class="rule" aria-hidden="true"></div>
-      </section>
+      <p class="kicker">@iamneo80 — on X</p>
+      <h1>Neo<span class="dot">.</span></h1>
+      <p class="tagline">Posting on <strong>X</strong>. Nothing else, nowhere else — this page is the whole portfolio.</p>
 
-      <section class="section" aria-label="Photos">
-        <h2>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-          Photos
-        </h2>
-        <img class="photo" src="photo.png" alt="Neo banner" />
-      </section>
+      <div class="stats" aria-label="X statistics">
+        <div class="stat"><span class="num">21,298</span><span class="lbl">Followers</span></div>
+        <div class="stat"><span class="num">215</span><span class="lbl">Posts</span></div>
+        <div class="stat"><span class="num">930,406</span><span class="lbl">Views</span></div>
+      </div>
 
-      <section class="section" aria-label="On X">
-        <h2>On X</h2>
-        <div class="stats">
-          <div class="stat"><span class="num">21,298</span><span class="lbl">Followers</span></div>
-          <div class="stat"><span class="num">215</span><span class="lbl">Posts</span></div>
-          <div class="stat"><span class="num">930,406</span><span class="lbl">Views</span></div>
-        </div>
-      </section>
+      <div class="photo">
+        <img src="photo.png" alt="Neo banner" />
+      </div>
 
-      <section class="section" aria-label="Links">
-        <h2>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-          Links
-        </h2>
-        <p><a class="xlink" href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">@iamneo80 on X</a></p>
-      </section>
-
-      <footer>
-        Neo<span class="dot" aria-hidden="true">&middot;</span>Personal page
-      </footer>
+      <div class="cta">
+        <a class="xbtn" href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Follow on X
+        </a>
+      </div>
     </main>
+
+    <footer>
+      <span>© Neo</span>
+      <a href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">x.com/iamneo80</a>
+    </footer>
   </body>
 </html>
