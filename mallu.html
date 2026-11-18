@@ -71,7 +71,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>
         <input id="vsearch" type="search" placeholder="Search videos" aria-label="Search videos" autocomplete="off" />
       </div>
-      <div class="list">
+      <div class="list" data-new-count="1">
         <a class="item" href="https://x.com/iamneo80/status/2004992673334395073" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Diya Gowda<span class="go">Watch</span></a>
         <a class="item" href="https://x.com/iamneo80/status/2014866925436993907" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Resmi Nair 01<span class="go">Watch</span></a>
         <a class="item" href="https://x.com/iamneo80/status/2015666284491690338" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Tulsi<span class="go">Watch</span></a>
@@ -83,7 +83,7 @@
         <a class="item" href="https://x.com/iamneo80/status/2060817779410821467" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Resmi &amp; Tina<span class="go">Watch</span></a>
         <a class="item" href="https://x.com/iamneo80/status/2065859609039159714" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Resmi Nair 05<span class="go">Watch</span></a>
         <a class="item" href="https://x.com/iamneo80/status/2078442603650183567" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Resmi FIFA<span class="go">Watch</span></a>
-        <a class="item" href="https://x.com/iamneo80/status/2121203583626658143" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Resmi Nair 06<span class="badge">New</span><span class="go">Watch</span></a>
+        <a class="item" href="https://x.com/iamneo80/status/2121203583626658143" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Resmi Nair 06<span class="go">Watch</span></a>
       <p class="none" id="vnone" hidden>No videos match your search.</p>
       </div>
       <footer>
@@ -123,6 +123,32 @@
             if (show) visible++;
           });
           if (none) none.hidden = visible !== 0;
+        });
+      })();
+    </script>
+    <script>
+      // Automatic "New" badge: the newest video(s) on this page get it.
+      // X post IDs grow over time, so the biggest ID in a link is the newest post.
+      (function () {
+        var list = document.querySelector(".list");
+        if (!list) return;
+        var n = parseInt(list.getAttribute("data-new-count") || "1", 10) || 1;
+        var scored = [];
+        Array.prototype.forEach.call(list.querySelectorAll(".item"), function (it) {
+          var m = /status\/(\d+)/.exec(it.getAttribute("href") || "");
+          if (m) scored.push({ el: it, id: m[1] });
+        });
+        scored.sort(function (a, b) {
+          if (a.id.length !== b.id.length) return b.id.length - a.id.length;
+          return a.id < b.id ? 1 : a.id > b.id ? -1 : 0;
+        });
+        scored.slice(0, n).forEach(function (s) {
+          if (s.el.querySelector(".badge")) return;
+          var b = document.createElement("span");
+          b.className = "badge";
+          b.textContent = "New";
+          var go = s.el.querySelector(".go");
+          if (go) s.el.insertBefore(b, go); else s.el.appendChild(b);
         });
       })();
     </script>

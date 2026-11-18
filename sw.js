@@ -1,5 +1,5 @@
-// N E O — offline cache (cache-first for this site's own files)
-var CACHE = 'neo-v1';
+// N E O — offline cache: pages network-first so updates show fast, assets cache-first
+var CACHE = 'neo-v2';
 var CORE = ['./', 'index.html', 'mallu.html', 'resmi-nair.html', 'insta-vs-reality.html', 'all-works.html',
   'photo.webp', 'photo.jpg', 'avatar.webp', 'avatar.jpg', 'favicon.png', 'apple-touch-icon.png',
   'icon-192.png', 'icon-512.png', 'manifest.webmanifest'];
@@ -14,6 +14,19 @@ self.addEventListener('activate', function (e) {
 self.addEventListener('fetch', function (e) {
   var url = new URL(e.request.url);
   if (e.request.method !== 'GET' || url.origin !== self.location.origin) return;
+  var isPage = e.request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname.endsWith('/');
+  if (isPage) {
+    // Network-first: fresh page whenever online, cache only as the offline fallback
+    e.respondWith(fetch(e.request).then(function (res) {
+      var copy = res.clone();
+      caches.open(CACHE).then(function (c) { c.put(e.request, copy); });
+      return res;
+    }).catch(function () {
+      return caches.match(e.request).then(function (hit) { return hit || caches.match('index.html'); });
+    }));
+    return;
+  }
+  // Cache-first for images and other assets
   e.respondWith(caches.match(e.request).then(function (hit) {
     return hit || fetch(e.request).then(function (res) {
       var copy = res.clone();
