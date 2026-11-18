@@ -655,9 +655,9 @@
       </div>
     </div>
     <div class="menu" id="menu">
-      <a href="#">Home </a>
-      <a href="#posts">Top Posts </a>
-      <a href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">Contact </a>
+      <a href="#">Home</a>
+      <a href="#about">About</a>
+      <a href="#posts">Top Posts</a>
     </div>
     <div class="search-strip" id="search-strip">
       <div class="search-in">
@@ -816,10 +816,8 @@
       </div>
     </main>
 
-    <footer>
-      <span>© Neo</span>
-      <span class="pageviews" id="pageviews" hidden style="align-items:center;gap:6px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg><span class="pv-num" id="pv-num">–</span></span>
-      <a href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">x.com/iamneo80</a>
+    <footer style="justify-content:center;">
+      <span>&copy; 2026 Neo. All posts live on <a href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">X</a>.</span>
     </footer>
     <div style="width:100%;max-width:880px;padding:0 24px 30px;display:flex;justify-content:center;">
       <a class="to-top" href="#">Back to top</a>
@@ -883,22 +881,6 @@
         document.addEventListener('keydown', function (e) {
           if (e.key === 'Escape') { strip.classList.remove('open'); closeMenu(); }
         });
-      })();
-    </script>
-    <script data-goatcounter="https://iamneo80.goatcounter.com/count"
-            async src="//gc.zgo.at/count.js"></script>
-    <script>
-      // Show the total page-view count from GoatCounter (public counter)
-      (function () {
-        fetch("https://iamneo80.goatcounter.com/counter/TOTAL.json")
-          .then(function (r) { return r.json(); })
-          .then(function (d) {
-            var n = parseInt(d.count, 10);
-            if (isNaN(n)) return;
-            document.getElementById("pv-num").textContent = n.toLocaleString("en-US");
-            var pvEl = document.getElementById("pageviews"); pvEl.hidden = false; pvEl.style.display = "inline-flex";
-          })
-          .catch(function () { /* counter unavailable — line stays hidden */ });
       })();
     </script>
     <script>
@@ -1012,6 +994,19 @@
       if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(function () {}); }
     </script>
   
+    <script>
+      // Top posts: shuffle the poster cards into a random order on every visit
+      (function () {
+        var strip = document.querySelector('.tp-strip');
+        if (!strip) return;
+        var cards = Array.prototype.slice.call(strip.children);
+        for (var i = cards.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = cards[i]; cards[i] = cards[j]; cards[j] = t;
+        }
+        for (var k = 0; k < cards.length; k++) strip.appendChild(cards[k]);
+      })();
+    </script>
     <script>
       // Top posts carousel: keep the dots in sync while swiping
       (function () {
