@@ -148,6 +148,16 @@
         color: var(--muted);
       }
 
+      /* Page views line */
+      .pageviews {
+        margin-top: 16px;
+        text-align: center;
+        font-size: 13px;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+      }
+      .pageviews .pv-num { color: var(--green); font-weight: 700; font-variant-numeric: tabular-nums; }
+
       /* Top posts */
       .posts { margin-top: 44px; }
       .posts h2 {
@@ -298,6 +308,8 @@
         <div class="stat"><span class="num" data-count="930406">930,406</span><span class="lbl">Views</span></div>
       </div>
 
+      <p class="pageviews anim d5" id="pageviews" hidden>This page has been viewed <span class="pv-num" id="pv-num">–</span> times</p>
+
       <section class="posts anim d5" aria-label="Top posts">
         <h2>Top posts</h2>
         <a class="post-card" href="https://x.com/iamneo80/status/2052163352231858537" target="_blank" rel="noopener noreferrer">
@@ -340,6 +352,22 @@
       <a href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">x.com/iamneo80</a>
     </footer>
 
+    <script data-goatcounter="https://iamneo80.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+    <script>
+      // Show the total page-view count from GoatCounter (public counter)
+      (function () {
+        fetch("https://iamneo80.goatcounter.com/counter/TOTAL.json")
+          .then(function (r) { return r.json(); })
+          .then(function (d) {
+            var n = parseInt(d.count, 10);
+            if (isNaN(n)) return;
+            document.getElementById("pv-num").textContent = n.toLocaleString("en-US");
+            document.getElementById("pageviews").hidden = false;
+          })
+          .catch(function () { /* counter unavailable — line stays hidden */ });
+      })();
+    </script>
     <script>
       // Count-up animation for the stats (skipped when reduced motion is preferred)
       (function () {
