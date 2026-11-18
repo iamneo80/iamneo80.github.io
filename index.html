@@ -190,6 +190,28 @@
       .stats-plain b { color: var(--ink); font-weight: 700; margin-left: 5px; font-variant-numeric: tabular-nums; }
 
       /* Collections */
+      .coll-head { width: 100%; font: inherit; text-align: left; cursor: pointer; }
+      .coll-head .chev { color: var(--muted); font-size: 14px; transition: transform 0.25s ease; }
+      .coll-group.open .coll-head .chev { transform: rotate(180deg); }
+      .coll-items { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+      .coll-group.open .coll-items { max-height: 300px; }
+      .coll-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 0 6px 10px 22px;
+        padding: 13px 18px;
+        border-radius: 999px;
+        border: 1px solid var(--glass-border);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 14.5px;
+        font-weight: 600;
+      }
+      .coll-item:hover { border-color: rgba(61, 255, 142, 0.5); }
+      .coll-item svg { width: 17px; height: 17px; color: var(--green); flex: none; }
+
       .collections { margin-top: 44px; }
       .collections h2 {
         font-size: 12px;
@@ -560,9 +582,9 @@
       </div>
     </div>
     <div class="menu" id="menu">
-      <a href="#">Home <span class="arr">&uarr;</span></a>
-      <a href="#posts">Top Posts <span class="arr">&rarr;</span></a>
-      <a href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">Contact <span class="arr">&#8599;</span></a>
+      <a href="#">Home </a>
+      <a href="#posts">Top Posts </a>
+      <a href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">Contact </a>
     </div>
     <div class="search-strip" id="search-strip">
       <div class="search-in">
@@ -632,17 +654,17 @@
           <p class="post-text">INSTA vs Reality (part-03)</p>
           <div class="post-meta">
             <span>661.9K views &middot; 14.67K likes</span>
-            <span class="view">View on X &rarr;</span>
+            <span class="view">View on X</span>
           </div>
         </a>
         <div class="post-rows">
           <a class="post-row" href="https://x.com/iamneo80/status/2019715227202527493" target="_blank" rel="noopener noreferrer">
             <span>Top post &middot; @iamneo80</span>
-            <span class="view">View on X &rarr;</span>
+            <span class="view">View on X</span>
           </a>
           <a class="post-row" href="https://x.com/iamneo80/status/2050328989517119771" target="_blank" rel="noopener noreferrer">
             <span>Top post &middot; @iamneo80</span>
-            <span class="view">View on X &rarr;</span>
+            <span class="view">View on X</span>
           </a>
         </div>
         <p class="search-none" id="search-none">No posts match your search.</p>
@@ -651,17 +673,17 @@
 
       <section class="collections anim d6" id="collections" aria-label="Collections">
         <h2>Collections</h2>
-        <a class="post-row" href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">
+        <a class="post-row" href="mallu.html">
           <span class="post-row-title">Mallu<span class="coll-sub">Collection</span></span>
-          <span class="view">View on X &rarr;</span>
+          <span class="view">Open</span>
         </a>
-        <a class="post-row" href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">
+        <a class="post-row" href="resmi-nair.html">
           <span class="post-row-title">Resmi Nair<span class="coll-sub">Collection</span></span>
-          <span class="view">View on X &rarr;</span>
+          <span class="view">Open</span>
         </a>
-        <a class="post-row" href="https://x.com/iamneo80/status/2052163352231858537" target="_blank" rel="noopener noreferrer">
+        <a class="post-row" href="insta-vs-reality.html">
           <span class="post-row-title">Insta vs Reality<span class="coll-sub">Collection</span></span>
-          <span class="view">View on X &rarr;</span>
+          <span class="view">Open</span>
         </a>
       </section>
 
@@ -679,7 +701,7 @@
       <a href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">x.com/iamneo80</a>
     </footer>
     <div style="width:100%;max-width:880px;padding:0 24px 30px;display:flex;justify-content:center;">
-      <a class="to-top" href="#">Back to top &uarr;</a>
+      <a class="to-top" href="#">Back to top</a>
     </div>
 
     <script>
