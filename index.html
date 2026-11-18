@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>N E O — @iamneo80</title>
     <meta name="description" content="N E O on X. 21,313 followers, 930,406 views." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="N E O — @iamneo80" />
+    <meta property="og:description" content="Posting on X. Nothing else, nowhere else." />
+    <meta property="og:url" content="https://iamneo80.github.io/" />
+    <meta property="og:image" content="https://iamneo80.github.io/photo.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" sizes="64x64" href="favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
     <style>
@@ -17,7 +23,8 @@
         --glass-border: rgba(255, 255, 255, 0.09);
       }
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html { color-scheme: dark; -webkit-tap-highlight-color: transparent; }
+      html { color-scheme: dark; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+      section[id], div[id="stats"] { scroll-margin-top: 84px; }
       body {
         background:
           radial-gradient(720px 420px at 85% -80px, rgba(61, 255, 142, 0.13), transparent 65%),
@@ -57,6 +64,171 @@
       h1 .ch:nth-child(4) { animation-delay: 0.42s; }
       h1 .ch:nth-child(5) { animation-delay: 0.52s; }
       h1 .ch:nth-child(6) { animation-delay: 0.62s; }
+
+      /* Sticky glass navbar */
+      .nav {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 40;
+        background: rgba(6, 8, 7, 0.6);
+        -webkit-backdrop-filter: blur(20px) saturate(160%);
+        backdrop-filter: blur(20px) saturate(160%);
+        border-bottom: 1px solid var(--glass-border);
+      }
+      .nav-in {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 10px 24px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-weight: 800; letter-spacing: 0.06em; font-size: 15px; }
+      .nav-brand img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(61, 255, 142, 0.55); }
+      .nav-links { margin-left: auto; display: flex; align-items: center; gap: 20px; }
+      .nav-links a { color: var(--muted); text-decoration: none; font-size: 13.5px; font-weight: 600; letter-spacing: 0.02em; }
+      .nav-links a:hover { color: var(--green); }
+      .nav-links a.nav-cta {
+        color: var(--green);
+        border: 1px solid rgba(61, 255, 142, 0.45);
+        background: rgba(255, 255, 255, 0.04);
+        padding: 7px 14px;
+        border-radius: 999px;
+      }
+      .nav-links a.nav-cta:hover { background: rgba(61, 255, 142, 0.12); }
+
+      /* Glass icon buttons (hamburger + search) */
+      .icon-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px; height: 38px;
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--ink);
+        cursor: pointer;
+        flex: none;
+        transition: border-color 0.2s ease, background 0.2s ease;
+      }
+      .icon-btn:hover { border-color: rgba(61, 255, 142, 0.5); background: rgba(61, 255, 142, 0.08); }
+      .icon-btn svg { width: 19px; height: 19px; }
+
+      /* Hamburger dropdown menu */
+      .menu {
+        position: fixed;
+        top: 76px; left: 16px;
+        z-index: 39;
+        min-width: 200px;
+        background: rgba(10, 14, 11, 0.72);
+        -webkit-backdrop-filter: blur(22px) saturate(160%);
+        backdrop-filter: blur(22px) saturate(160%);
+        border: 1px solid var(--glass-border);
+        border-radius: 18px;
+        padding: 8px;
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+        pointer-events: none;
+        transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .menu.open { opacity: 1; transform: none; pointer-events: auto; }
+      .menu a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 14px;
+        border-radius: 12px;
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .menu a:hover { background: rgba(61, 255, 142, 0.1); color: var(--green); }
+      .menu a span.arr { color: var(--muted); font-size: 13px; }
+
+      /* Search strip under navbar */
+      .search-strip {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 38;
+        background: rgba(6, 8, 7, 0.6);
+        -webkit-backdrop-filter: blur(20px) saturate(160%);
+        backdrop-filter: blur(20px) saturate(160%);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .search-strip.open { max-height: 76px; }
+      .search-in { max-width: 880px; margin: 0 auto; padding: 12px 24px; }
+      .search-in input {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--glass-border);
+        border-radius: 999px;
+        padding: 11px 18px;
+        color: var(--ink);
+        font: inherit;
+        font-size: 14.5px;
+        outline: none;
+      }
+      .search-in input:focus { border-color: rgba(61, 255, 142, 0.55); }
+      .search-none { display: none; color: var(--muted); font-size: 14px; padding: 6px 2px 2px; }
+      .search-none.show { display: block; }
+
+      /* About */
+      .about { margin-top: 44px; }
+      .about h2 {
+        font-size: 12px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--green);
+        margin-bottom: 16px;
+      }
+      .about-card {
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 22px 24px;
+        -webkit-backdrop-filter: blur(18px) saturate(160%);
+        backdrop-filter: blur(18px) saturate(160%);
+        font-size: 16px;
+        line-height: 1.65;
+        color: var(--ink-soft, #c9d4ca);
+      }
+      .about-card strong { color: var(--ink); }
+
+      /* Back to top */
+      .to-top {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        border: 1px solid var(--glass-border);
+        background: rgba(255, 255, 255, 0.04);
+        padding: 8px 16px;
+        border-radius: 999px;
+      }
+      .to-top:hover { color: var(--green); border-color: rgba(61, 255, 142, 0.5); }
+
+      /* Icon tools overlaid on the banner */
+      .banner-tools {
+        position: absolute;
+        top: 14px; left: 14px; right: 14px;
+        z-index: 5;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        pointer-events: none;
+      }
+      .banner-tools .icon-btn {
+        pointer-events: auto;
+        background: rgba(8, 10, 9, 0.34);
+        -webkit-backdrop-filter: blur(16px) saturate(160%);
+        backdrop-filter: blur(16px) saturate(160%);
+      }
 
       /* Banner — on top, full view, softly faded like iOS */
       .banner { position: relative; border-radius: 24px; overflow: hidden; }
@@ -330,7 +502,11 @@
         .stat + .stat { border-left: 1px solid var(--glass-border); border-top: none; }
         .stat .num { font-size: clamp(18px, 5.6vw, 24px); white-space: nowrap; }
         .stat .lbl { font-size: 9px; letter-spacing: 0.14em; }
+        .nav-in { padding: 8px 16px; gap: 12px; }
+        .nav-links { gap: 14px; }
+        .nav-links a { font-size: 12.5px; }
         .posts { margin-top: 32px; }
+        .about { margin-top: 32px; }
         .post-card { padding: 16px 18px; }
         .cta { margin-top: 28px; }
         footer { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
@@ -355,8 +531,26 @@
         </div>
       </div>
     </div>
+    <div class="menu" id="menu">
+      <a href="#">Home <span class="arr">&uarr;</span></a>
+      <a href="#posts">Top Posts <span class="arr">&rarr;</span></a>
+      <a href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">Contact <span class="arr">&#8599;</span></a>
+    </div>
+    <div class="search-strip" id="search-strip">
+      <div class="search-in">
+        <input id="search-input" type="search" placeholder="Search posts&hellip;" autocomplete="off" />
+      </div>
+    </div>
     <main>
       <div class="banner anim d1">
+        <div class="banner-tools">
+          <button class="icon-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <button class="icon-btn" id="search-btn" type="button" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>
+          </button>
+        </div>
         <picture>
           <source srcset="photo.webp" type="image/webp" />
           <img src="photo.jpg" alt="Neo banner" width="1600" height="533" fetchpriority="high" />
@@ -376,13 +570,13 @@
 
       <p class="tagline anim d3">Posting on <strong>X</strong>. Nothing else, nowhere else.</p>
 
-      <div class="stats anim d4" aria-label="X statistics">
+      <div class="stats anim d4" id="stats" aria-label="X statistics">
         <div class="stat"><span class="num" data-count="21313">21,313</span><span class="lbl">Followers</span></div>
         <div class="stat"><span class="num" data-count="215">215</span><span class="lbl">Posts</span></div>
         <div class="stat"><span class="num" data-count="930406">930,406</span><span class="lbl">Views</span></div>
       </div>
 
-      <section class="posts anim d5" aria-label="Top posts">
+      <section class="posts anim d5" id="posts" aria-label="Top posts">
         <h2>Top posts</h2>
         <a class="post-card" href="https://x.com/iamneo80/status/2052163352231858537" target="_blank" rel="noopener noreferrer">
           <div class="post-head">
@@ -409,7 +603,9 @@
             <span class="view">View on X &rarr;</span>
           </a>
         </div>
+        <p class="search-none" id="search-none">No posts match your search.</p>
       </section>
+
 
       <div class="cta anim d6">
         <a class="btn" href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">
@@ -421,9 +617,12 @@
 
     <footer>
       <span>© Neo</span>
-      <span class="pageviews" id="pageviews" hidden>Viewers&nbsp;<span class="pv-num" id="pv-num">–</span></span>
+      <span class="pageviews" id="pageviews" hidden style="align-items:center;gap:6px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg><span class="pv-num" id="pv-num">–</span></span>
       <a href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">x.com/iamneo80</a>
     </footer>
+    <div style="width:100%;max-width:880px;padding:0 24px 30px;display:flex;justify-content:center;">
+      <a class="to-top" href="#">Back to top &uarr;</a>
+    </div>
 
     <script>
       // 18+ age gate — asks once per session
@@ -447,6 +646,44 @@
         });
       })();
     </script>
+    <script>
+      (function () {
+        var menuBtn = document.getElementById('menu-btn');
+        var menu = document.getElementById('menu');
+        var searchBtn = document.getElementById('search-btn');
+        var strip = document.getElementById('search-strip');
+        var input = document.getElementById('search-input');
+        function closeMenu() { menu.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+        menuBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var open = menu.classList.toggle('open');
+          menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        document.addEventListener('click', function (e) {
+          if (!menu.contains(e.target)) closeMenu();
+        });
+        menu.addEventListener('click', function () { closeMenu(); });
+        searchBtn.addEventListener('click', function () {
+          var open = strip.classList.toggle('open');
+          if (open) { input.focus(); document.getElementById('posts').scrollIntoView({ behavior: 'smooth' }); }
+        });
+        var items = Array.prototype.slice.call(document.querySelectorAll('.posts .post-card, .posts .post-row'));
+        var none = document.getElementById('search-none');
+        input.addEventListener('input', function () {
+          var q = input.value.trim().toLowerCase();
+          var visible = 0;
+          items.forEach(function (el) {
+            var hit = !q || el.textContent.toLowerCase().indexOf(q) !== -1;
+            el.style.display = hit ? '' : 'none';
+            if (hit) visible++;
+          });
+          none.classList.toggle('show', q !== '' && visible === 0);
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') { strip.classList.remove('open'); closeMenu(); }
+        });
+      })();
+    </script>
     <script data-goatcounter="https://iamneo80.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
     <script>
@@ -458,7 +695,7 @@
             var n = parseInt(d.count, 10);
             if (isNaN(n)) return;
             document.getElementById("pv-num").textContent = n.toLocaleString("en-US");
-            document.getElementById("pageviews").hidden = false;
+            var pvEl = document.getElementById("pageviews"); pvEl.hidden = false; pvEl.style.display = "inline-flex";
           })
           .catch(function () { /* counter unavailable — line stays hidden */ });
       })();
