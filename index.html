@@ -156,6 +156,43 @@
         border: 1px solid var(--line);
       }
 
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .stat {
+        background: var(--accent-soft);
+        border: 1px solid var(--ring);
+        border-radius: 12px;
+        padding: 14px 10px;
+        text-align: center;
+      }
+      .stat .num {
+        display: block;
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--accent-ink);
+        line-height: 1.2;
+      }
+      .stat .lbl {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-top: 4px;
+      }
+      .xlink {
+        display: inline-block;
+        background: var(--accent);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 10px 18px;
+        border-radius: 999px;
+      }
+
       footer {
         margin-top: 6px;
         text-align: center;
@@ -187,12 +224,21 @@
         <img class="photo" src="photo.png" alt="Neo banner" />
       </section>
 
+      <section class="section" aria-label="On X">
+        <h2>On X</h2>
+        <div class="stats">
+          <div class="stat"><span class="num">21,298</span><span class="lbl">Followers</span></div>
+          <div class="stat"><span class="num">215</span><span class="lbl">Posts</span></div>
+          <div class="stat"><span class="num">930,406</span><span class="lbl">Views</span></div>
+        </div>
+      </section>
+
       <section class="section" aria-label="Links">
         <h2>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           Links
         </h2>
-        <p class="empty"><strong>No links yet.</strong> When Neo adds links &mdash; social profiles, projects, or anything else worth sharing &mdash; they&rsquo;ll be listed here.</p>
+        <p><a class="xlink" href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">@iamneo80 on X</a></p>
       </section>
 
       <footer>
