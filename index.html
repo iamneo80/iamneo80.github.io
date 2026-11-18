@@ -634,9 +634,9 @@
       </section>
 
       <div class="stats-plain anim d5" aria-label="Statistics in full">
-        <span>Followers <b>21313</b></span>
-        <span>Posts <b>215</b></span>
-        <span>Viewers <b>1016227</b></span>
+        <span>Followers <b class="pnum" data-count="21313">21313</b></span>
+        <span>Posts <b class="pnum" data-count="215">215</b></span>
+        <span>Viewers <b class="pnum" data-count="1016227">1016227</b></span>
       </div>
 
 
@@ -683,6 +683,14 @@
         </a>
         <a class="post-row" href="insta-vs-reality.html">
           <span class="post-row-title">Insta vs Reality<span class="coll-sub">Collection</span></span>
+          <span class="view">Open</span>
+        </a>
+      </section>
+
+      <section class="collections anim d6" aria-label="All my works">
+        <h2>All my works</h2>
+        <a class="post-row" href="all-works.html">
+          <span class="post-row-title">All my works<span class="coll-sub">Every video</span></span>
           <span class="view">Open</span>
         </a>
       </section>
@@ -797,6 +805,36 @@
           }
           requestAnimationFrame(step);
         });
+      })();
+    </script>
+    <script>
+      // Count-up for the plain full-number stats row under About (raw digits, no commas)
+      (function () {
+        var els = document.querySelectorAll(".pnum[data-count]");
+        if (!els.length) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        function animate(el) {
+          var target = parseInt(el.getAttribute("data-count"), 10);
+          var dur = 1400, start = null;
+          function step(ts) {
+            if (!start) start = ts;
+            var p = Math.min((ts - start) / dur, 1);
+            var eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = String(Math.round(target * eased));
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+        if ("IntersectionObserver" in window) {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) { animate(e.target); io.unobserve(e.target); }
+            });
+          }, { threshold: 0.4 });
+          els.forEach(function (el) { io.observe(el); });
+        } else {
+          els.forEach(animate);
+        }
       })();
     </script>
   </body>
