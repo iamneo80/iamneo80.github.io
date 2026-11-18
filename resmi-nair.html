@@ -39,8 +39,18 @@
       .gate-btns button:hover { border-color: rgba(61,255,142,0.55); }
       .gate-btns .yes { color: #06130b; background: var(--green); border-color: transparent; }
       .gate-msg { margin-top: 16px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+          .search { margin-top: 22px; display: flex; align-items: center; gap: 10px; padding: 13px 18px; border-radius: 999px; border: 1px solid var(--glass-border); background: var(--glass); -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); }
+      .search svg { width: 16px; height: 16px; color: var(--muted); flex: none; }
+      .search input { flex: 1; min-width: 0; background: none; border: none; outline: none; color: var(--ink); font-size: 15px; font-family: inherit; }
+      .search input::placeholder { color: var(--muted); }
+      .none { margin-top: 18px; color: var(--muted); font-size: 14px; text-align: center; }
+      .badge { background: var(--green); color: #04150a; font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+      .surprise { margin-top: 14px; width: 100%; padding: 14px 20px; border-radius: 999px; border: 1px solid rgba(61,255,142,0.55); background: rgba(61,255,142,0.08); color: var(--green); font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); }
+      .surprise:hover { background: rgba(61,255,142,0.16); }
     </style>
-  </head>
+      <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#060807" />
+</head>
   <body>
     <div class="gate" id="gate" role="dialog" aria-modal="true" aria-label="Age verification">
       <div class="gate-card">
@@ -57,6 +67,10 @@
       <a class="back" href="index.html">Back</a>
       <h1>Resmi Nair<span class="dot">.</span></h1>
       <p class="sub">Collection</p>
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>
+        <input id="vsearch" type="search" placeholder="Search videos" aria-label="Search videos" autocomplete="off" />
+      </div>
       <div class="list">
         <a class="item" href="https://x.com/iamneo80/status/2014866925436993907" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Resmi Nair 01<span class="go">Watch</span></a>
         <a class="item" href="https://x.com/iamneo80/status/2018418159896977500" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Resmi Nair 02<span class="go">Watch</span></a>
@@ -66,7 +80,8 @@
         <a class="item" href="https://x.com/iamneo80/status/2060817779410821467" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Resmi &amp; Tina<span class="go">Watch</span></a>
         <a class="item" href="https://x.com/iamneo80/status/2065859609039159714" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Resmi Nair 05<span class="go">Watch</span></a>
         <a class="item" href="https://x.com/iamneo80/status/2078442603650183567" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Resmi FIFA<span class="go">Watch</span></a>
-        <a class="item" href="https://x.com/iamneo80/status/2121203583626658143" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Resmi Nair 06<span class="go">Watch</span></a>
+        <a class="item" href="https://x.com/iamneo80/status/2121203583626658143" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Resmi Nair 06<span class="badge">New</span><span class="go">Watch</span></a>
+      <p class="none" id="vnone" hidden>No videos match your search.</p>
       </div>
       <footer>
         <span>&copy; Neo</span>
@@ -88,6 +103,28 @@
           document.getElementById('gate-msg').hidden = false;
         });
       })();
+    </script>
+    <script>
+      // Live search filter for the video list
+      (function () {
+        var input = document.getElementById("vsearch");
+        if (!input) return;
+        var items = Array.prototype.slice.call(document.querySelectorAll(".item"));
+        var none = document.getElementById("vnone");
+        input.addEventListener("input", function () {
+          var q = input.value.trim().toLowerCase();
+          var visible = 0;
+          items.forEach(function (it) {
+            var show = !q || it.textContent.toLowerCase().indexOf(q) !== -1;
+            it.style.display = show ? "" : "none";
+            if (show) visible++;
+          });
+          if (none) none.hidden = visible !== 0;
+        });
+      })();
+    </script>
+    <script>
+      if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(function () {}); }
     </script>
   </body>
 </html>

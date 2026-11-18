@@ -57,6 +57,8 @@
       .d4 { animation-delay: 0.45s; }
       .d5 { animation-delay: 0.6s; }
       .d6 { animation-delay: 0.75s; }
+      .rv { transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+      .rv.pre { opacity: 0; transform: translateY(26px); }
       h1 .ch { display: inline-block; opacity: 0; animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
       h1 .ch:nth-child(1) { animation-delay: 0.12s; }
       h1 .ch:nth-child(2) { animation-delay: 0.22s; }
@@ -568,7 +570,9 @@
         .gate { transition: none; }
       }
     </style>
-  </head>
+      <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#060807" />
+</head>
   <body>
     <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" hidden>
       <div class="gate-card">
@@ -626,21 +630,21 @@
         <div class="stat"><span class="num">1M+</span><span class="lbl">Views</span></div>
       </div>
 
-      <section class="about anim d4" id="about" aria-label="About" style="margin-top:36px;">
+      <section class="about rv" id="about" aria-label="About" style="margin-top:36px;">
         <h2>About</h2>
         <div class="about-card">
           <p>Hello, I&rsquo;m <strong>NEO</strong>. I create NSFW video edits on <strong>X</strong>, transforming raw clips into fast, scroll-stopping content. Check out my account and follow if you enjoy the work.</p>
         </div>
       </section>
 
-      <div class="stats-plain anim d5" aria-label="Statistics in full">
+      <div class="stats-plain rv" aria-label="Statistics in full">
         <span>Followers <b class="pnum" data-count="21313">21313</b></span>
         <span>Posts <b class="pnum" data-count="215">215</b></span>
         <span>Viewers <b class="pnum" data-count="1016227">1016227</b></span>
       </div>
 
 
-      <section class="posts anim d5" id="posts" aria-label="Top posts">
+      <section class="posts rv" id="posts" aria-label="Top posts">
         <h2>Top posts</h2>
         <a class="post-card" href="https://x.com/iamneo80/status/2052163352231858537" target="_blank" rel="noopener noreferrer">
           <div class="post-head">
@@ -671,35 +675,39 @@
       </section>
 
 
-      <section class="collections anim d6" id="collections" aria-label="Collections">
+      <section class="collections rv" id="collections" aria-label="Collections">
         <h2>Collections</h2>
         <a class="post-row" href="mallu.html">
-          <span class="post-row-title">Mallu<span class="coll-sub">Collection</span></span>
+          <span class="post-row-title">Mallu<span class="coll-sub">Collection &middot; 12 videos</span></span>
           <span class="view">Open</span>
         </a>
         <a class="post-row" href="resmi-nair.html">
-          <span class="post-row-title">Resmi Nair<span class="coll-sub">Collection</span></span>
+          <span class="post-row-title">Resmi Nair<span class="coll-sub">Collection &middot; 9 videos</span></span>
           <span class="view">Open</span>
         </a>
         <a class="post-row" href="insta-vs-reality.html">
-          <span class="post-row-title">Insta vs Reality<span class="coll-sub">Collection</span></span>
+          <span class="post-row-title">Insta vs Reality<span class="coll-sub">Collection &middot; 5 videos</span></span>
           <span class="view">Open</span>
         </a>
       </section>
 
-      <section class="collections anim d6" aria-label="All my works">
+      <section class="collections rv" aria-label="All my works">
         <h2>All my works</h2>
         <a class="post-row" href="all-works.html">
-          <span class="post-row-title">All my works<span class="coll-sub">Every video</span></span>
+          <span class="post-row-title">All my works<span class="coll-sub">Every video &middot; 15 videos</span></span>
           <span class="view">Open</span>
         </a>
       </section>
 
-      <div class="cta anim d6">
+      <div class="cta rv">
         <a class="btn" href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           Follow on X
         </a>
+        <button class="btn" id="share-btn" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4"/><path d="M8 7l4-4 4 4"/><path d="M5 13v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"/></svg>
+          <span id="share-label">Share</span>
+        </button>
       </div>
     </main>
 
@@ -836,6 +844,42 @@
           els.forEach(animate);
         }
       })();
+    </script>
+    <script>
+      // Scroll reveal for below-fold sections
+      (function () {
+        var els = document.querySelectorAll(".rv");
+        if (!els.length || !("IntersectionObserver" in window)) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        els.forEach(function (el) { el.classList.add("pre"); });
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.classList.remove("pre"); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.12 });
+        els.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
+    <script>
+      // Share button: native share sheet, falling back to copying the link
+      (function () {
+        var btn = document.getElementById("share-btn");
+        if (!btn) return;
+        var label = document.getElementById("share-label");
+        btn.addEventListener("click", function () {
+          var data = { title: "N E O", text: "N E O on X", url: "https://iamneo80.github.io/" };
+          if (navigator.share) { navigator.share(data).catch(function () {}); return; }
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(data.url).then(function () {
+              label.textContent = "Link copied";
+              setTimeout(function () { label.textContent = "Share"; }, 2000);
+            }).catch(function () {});
+          }
+        });
+      })();
+    </script>
+    <script>
+      if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(function () {}); }
     </script>
   </body>
 </html>
