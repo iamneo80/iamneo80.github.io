@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Neo — @iamneo80</title>
     <meta name="description" content="Neo on X. 21,298 followers, 930,406 views." />
     <style>
@@ -15,7 +15,7 @@
         --glass-border: rgba(255, 255, 255, 0.09);
       }
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html { color-scheme: dark; }
+      html { color-scheme: dark; -webkit-tap-highlight-color: transparent; }
       body {
         background:
           radial-gradient(720px 420px at 85% -80px, rgba(61, 255, 142, 0.13), transparent 65%),
@@ -55,6 +55,16 @@
       h1 .ch:nth-child(4) { animation-delay: 0.42s; }
 
       /* Hero */
+      .avatar {
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+        border: 2px solid rgba(61, 255, 142, 0.55);
+        box-shadow: 0 12px 32px -10px rgba(61, 255, 142, 0.35);
+        margin-bottom: 26px;
+      }
       .kicker {
         font-size: 12px;
         letter-spacing: 0.32em;
@@ -63,7 +73,7 @@
         margin-bottom: 18px;
       }
       h1 {
-        font-size: clamp(76px, 18vw, 150px);
+        font-size: clamp(64px, 19vw, 150px);
         font-weight: 800;
         letter-spacing: -0.04em;
         line-height: 0.95;
@@ -161,9 +171,29 @@
       footer a:hover { color: var(--green); }
 
       @media (max-width: 560px) {
-        main { padding-top: 52px; }
-        .stat { padding: 20px; }
-        .stat + .stat { border-left: none; border-top: 1px solid var(--glass-border); }
+        main { padding: 48px 20px 118px; }
+        .avatar { width: 76px; height: 76px; margin-bottom: 20px; }
+        .tagline { margin-top: 16px; }
+        .stats { flex-wrap: nowrap; margin-top: 36px; border-radius: 20px; }
+        .stat { flex: 1 1 0; min-width: 0; padding: 16px 10px; }
+        .stat + .stat { border-left: 1px solid var(--glass-border); border-top: none; }
+        .stat .num { font-size: clamp(18px, 5.6vw, 24px); white-space: nowrap; }
+        .stat .lbl { font-size: 9px; letter-spacing: 0.14em; }
+        .photo { margin-top: 20px; }
+        .photo img { aspect-ratio: 2 / 1; object-fit: cover; object-position: center; border-radius: 20px; }
+        .cta {
+          position: fixed;
+          left: 0; right: 0; bottom: 0;
+          margin: 0;
+          padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+          background: rgba(6, 8, 7, 0.55);
+          -webkit-backdrop-filter: blur(18px) saturate(160%);
+          backdrop-filter: blur(18px) saturate(160%);
+          border-top: 1px solid var(--glass-border);
+          z-index: 10;
+        }
+        .btn { width: 100%; justify-content: center; }
+        footer { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
       }
       @media (prefers-reduced-motion: reduce) {
         .anim, h1 .ch { animation: none; opacity: 1; }
@@ -173,7 +203,11 @@
   </head>
   <body>
     <main>
-      <p class="kicker anim d1">@iamneo80 — on X</p>
+      <picture>
+        <source srcset="avatar.webp" type="image/webp" />
+        <img class="avatar anim d1" src="avatar.jpg" alt="Neo profile picture" width="480" height="480" />
+      </picture>
+      <p class="kicker anim d2">@iamneo80 — on X</p>
       <h1 aria-label="Neo."><span class="ch">N</span><span class="ch">e</span><span class="ch">o</span><span class="ch dot">.</span></h1>
       <p class="tagline anim d3">Posting on <strong>X</strong>. Nothing else, nowhere else — this page is the whole portfolio.</p>
 
