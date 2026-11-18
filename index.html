@@ -148,15 +148,74 @@
         color: var(--muted);
       }
 
-      /* Page views line */
-      .pageviews {
-        margin-top: 16px;
-        text-align: center;
-        font-size: 13px;
-        color: var(--muted);
-        letter-spacing: 0.04em;
-      }
+      /* Page views (footer, minimal) */
+      .pageviews { font-size: 13px; color: var(--muted); letter-spacing: 0.04em; }
       .pageviews .pv-num { color: var(--green); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+      /* 18+ age gate */
+      .gate {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(6, 8, 7, 0.6);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+        backdrop-filter: blur(20px) saturate(150%);
+        transition: opacity 0.45s ease;
+      }
+      .gate.gate-out { opacity: 0; pointer-events: none; }
+      @keyframes gateIn {
+        from { opacity: 0; transform: translateY(18px) scale(0.94); filter: blur(8px); }
+        to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+      }
+      .gate-card {
+        text-align: center;
+        max-width: 340px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--glass-border);
+        border-radius: 28px;
+        padding: 36px 28px 30px;
+        box-shadow: 0 32px 80px -24px rgba(0, 0, 0, 0.85);
+        animation: gateIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .gate-badge {
+        width: 76px;
+        height: 76px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        border: 2px solid rgba(61, 255, 142, 0.6);
+        background: rgba(61, 255, 142, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: var(--green);
+      }
+      .gate-card h2 { font-size: 21px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
+      .gate-card p { font-size: 14.5px; color: var(--muted); line-height: 1.55; margin-bottom: 24px; }
+      .gate-btns { display: flex; gap: 10px; justify-content: center; }
+      .gate-btn {
+        appearance: none;
+        border-radius: 999px;
+        font: inherit;
+        font-size: 15px;
+        font-weight: 600;
+        padding: 11px 30px;
+        cursor: pointer;
+        transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+      }
+      .gate-btn:active { transform: scale(0.96); }
+      .gate-yes { background: rgba(61, 255, 142, 0.14); border: 1px solid rgba(61, 255, 142, 0.65); color: var(--green); }
+      .gate-yes:hover { background: rgba(61, 255, 142, 0.24); }
+      .gate-no { background: rgba(255, 255, 255, 0.04); border: 1px solid var(--glass-border); color: var(--muted); }
+      .gate-no:hover { color: var(--ink); }
+      body.gate-locked { overflow: hidden; }
 
       /* Top posts */
       .posts { margin-top: 44px; }
@@ -277,10 +336,23 @@
       @media (prefers-reduced-motion: reduce) {
         .anim, h1 .ch { animation: none; opacity: 1; }
         .btn { transition: none; }
+        .gate-card { animation: none; }
+        .gate { transition: none; }
       }
     </style>
   </head>
   <body>
+    <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" hidden>
+      <div class="gate-card">
+        <div class="gate-badge" aria-hidden="true">18+</div>
+        <h2 id="gate-title">Age verification</h2>
+        <p id="gate-text">This page is for adults only.<br />Are you 18 or older?</p>
+        <div class="gate-btns" id="gate-btns">
+          <button class="gate-btn gate-yes" id="gate-yes" type="button">Yes</button>
+          <button class="gate-btn gate-no" id="gate-no" type="button">No</button>
+        </div>
+      </div>
+    </div>
     <main>
       <div class="banner anim d1">
         <picture>
@@ -307,8 +379,6 @@
         <div class="stat"><span class="num" data-count="215">215</span><span class="lbl">Posts</span></div>
         <div class="stat"><span class="num" data-count="930406">930,406</span><span class="lbl">Views</span></div>
       </div>
-
-      <p class="pageviews anim d5" id="pageviews" hidden>This page has been viewed <span class="pv-num" id="pv-num">–</span> times</p>
 
       <section class="posts anim d5" aria-label="Top posts">
         <h2>Top posts</h2>
@@ -349,9 +419,32 @@
 
     <footer>
       <span>© Neo</span>
+      <span class="pageviews" id="pageviews" hidden>Viewers&nbsp;<span class="pv-num" id="pv-num">–</span></span>
       <a href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">x.com/iamneo80</a>
     </footer>
 
+    <script>
+      // 18+ age gate — asks once per session
+      (function () {
+        var gate = document.getElementById("gate");
+        var ok = false;
+        try { ok = sessionStorage.getItem("neo-age-ok") === "1"; } catch (e) { }
+        if (ok) { gate.remove(); return; }
+        gate.hidden = false;
+        document.body.classList.add("gate-locked");
+        document.getElementById("gate-yes").addEventListener("click", function () {
+          try { sessionStorage.setItem("neo-age-ok", "1"); } catch (e) { }
+          gate.classList.add("gate-out");
+          document.body.classList.remove("gate-locked");
+          setTimeout(function () { gate.remove(); }, 480);
+        });
+        document.getElementById("gate-no").addEventListener("click", function () {
+          document.getElementById("gate-title").textContent = "18+ only";
+          document.getElementById("gate-text").textContent = "Sorry, you must be 18 or older to view this page.";
+          document.getElementById("gate-btns").remove();
+        });
+      })();
+    </script>
     <script data-goatcounter="https://iamneo80.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
     <script>
