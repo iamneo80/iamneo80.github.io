@@ -32,7 +32,7 @@
       main {
         width: 100%;
         max-width: 880px;
-        padding: 76px 24px 44px;
+        padding: 28px 24px 44px;
         flex: 1;
       }
 
@@ -47,38 +47,64 @@
       .d3 { animation-delay: 0.3s; }
       .d4 { animation-delay: 0.45s; }
       .d5 { animation-delay: 0.6s; }
-      .d6 { animation-delay: 0.75s; }
       h1 .ch { display: inline-block; opacity: 0; animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
       h1 .ch:nth-child(1) { animation-delay: 0.12s; }
       h1 .ch:nth-child(2) { animation-delay: 0.22s; }
       h1 .ch:nth-child(3) { animation-delay: 0.32s; }
       h1 .ch:nth-child(4) { animation-delay: 0.42s; }
 
-      /* Hero */
+      /* Banner — on top, full view, softly faded like iOS */
+      .banner { position: relative; border-radius: 24px; overflow: hidden; }
+      .banner img {
+        width: 100%;
+        height: auto;
+        display: block;
+        opacity: 0.78;
+      }
+      .banner::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, transparent 55%, rgba(6, 8, 7, 0.55) 100%);
+        pointer-events: none;
+      }
+
+      /* Profile row — avatar with the name beside it */
+      .profile-row {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-top: -40px;
+        padding: 0 16px;
+      }
       .avatar {
         width: 96px;
         height: 96px;
+        flex: none;
         border-radius: 50%;
         object-fit: cover;
         display: block;
-        border: 2px solid rgba(61, 255, 142, 0.55);
+        border: 3px solid var(--bg);
+        outline: 2px solid rgba(61, 255, 142, 0.55);
         box-shadow: 0 12px 32px -10px rgba(61, 255, 142, 0.35);
-        margin-bottom: 26px;
-      }
-      .kicker {
-        font-size: 12px;
-        letter-spacing: 0.32em;
-        text-transform: uppercase;
-        color: var(--green);
-        margin-bottom: 18px;
+        background: var(--bg);
       }
       h1 {
-        font-size: clamp(64px, 19vw, 150px);
+        font-size: clamp(42px, 9vw, 68px);
         font-weight: 800;
         letter-spacing: -0.04em;
         line-height: 0.95;
       }
       h1 .dot { color: var(--green); }
+      .kicker {
+        font-size: 11px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--green);
+        margin-top: 8px;
+      }
       .tagline {
         margin-top: 22px;
         font-size: clamp(17px, 3.4vw, 21px);
@@ -92,7 +118,7 @@
       .stats {
         display: flex;
         flex-wrap: wrap;
-        margin-top: 54px;
+        margin-top: 44px;
         background: var(--glass);
         border: 1px solid var(--glass-border);
         border-radius: 24px;
@@ -119,23 +145,12 @@
         color: var(--muted);
       }
 
-      /* Photo */
-      .photo { margin-top: 28px; }
-      .photo img {
-        width: 100%;
-        height: auto;
-        display: block;
-        border-radius: 24px;
-        border: 1px solid var(--glass-border);
-        box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.8);
-      }
-
-      /* Transparent glass button */
-      .cta { margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap; }
+      /* Small transparent glass button */
+      .cta { margin-top: 34px; display: flex; gap: 12px; flex-wrap: wrap; }
       .btn {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
         background: rgba(255, 255, 255, 0.04);
         -webkit-backdrop-filter: blur(14px) saturate(160%);
         backdrop-filter: blur(14px) saturate(160%);
@@ -143,8 +158,8 @@
         color: var(--green);
         text-decoration: none;
         font-weight: 600;
-        font-size: 16px;
-        padding: 13px 26px;
+        font-size: 14px;
+        padding: 9px 18px;
         border-radius: 999px;
         transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
       }
@@ -171,28 +186,18 @@
       footer a:hover { color: var(--green); }
 
       @media (max-width: 560px) {
-        main { padding: 48px 20px 118px; }
-        .avatar { width: 76px; height: 76px; margin-bottom: 20px; }
+        main { padding: 16px 16px 40px; }
+        .banner { border-radius: 20px; }
+        .profile-row { gap: 14px; margin-top: -30px; padding: 0 8px; }
+        .avatar { width: 74px; height: 74px; }
+        .kicker { font-size: 10px; letter-spacing: 0.24em; }
         .tagline { margin-top: 16px; }
-        .stats { flex-wrap: nowrap; margin-top: 36px; border-radius: 20px; }
+        .stats { flex-wrap: nowrap; margin-top: 32px; border-radius: 20px; }
         .stat { flex: 1 1 0; min-width: 0; padding: 16px 10px; }
         .stat + .stat { border-left: 1px solid var(--glass-border); border-top: none; }
         .stat .num { font-size: clamp(18px, 5.6vw, 24px); white-space: nowrap; }
         .stat .lbl { font-size: 9px; letter-spacing: 0.14em; }
-        .photo { margin-top: 20px; }
-        .photo img { aspect-ratio: 2 / 1; object-fit: cover; object-position: center; border-radius: 20px; }
-        .cta {
-          position: fixed;
-          left: 0; right: 0; bottom: 0;
-          margin: 0;
-          padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
-          background: rgba(6, 8, 7, 0.55);
-          -webkit-backdrop-filter: blur(18px) saturate(160%);
-          backdrop-filter: blur(18px) saturate(160%);
-          border-top: 1px solid var(--glass-border);
-          z-index: 10;
-        }
-        .btn { width: 100%; justify-content: center; }
+        .cta { margin-top: 28px; }
         footer { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -203,12 +208,24 @@
   </head>
   <body>
     <main>
-      <picture>
-        <source srcset="avatar.webp" type="image/webp" />
-        <img class="avatar anim d1" src="avatar.jpg" alt="Neo profile picture" width="480" height="480" />
-      </picture>
-      <p class="kicker anim d2">@iamneo80 — on X</p>
-      <h1 aria-label="Neo."><span class="ch">N</span><span class="ch">e</span><span class="ch">o</span><span class="ch dot">.</span></h1>
+      <div class="banner anim d1">
+        <picture>
+          <source srcset="photo.webp" type="image/webp" />
+          <img src="photo.jpg" alt="Neo banner" width="1600" height="533" fetchpriority="high" />
+        </picture>
+      </div>
+
+      <div class="profile-row anim d2">
+        <picture>
+          <source srcset="avatar.webp" type="image/webp" />
+          <img class="avatar" src="avatar.jpg" alt="Neo profile picture" width="480" height="480" />
+        </picture>
+        <div>
+          <h1 aria-label="Neo."><span class="ch">N</span><span class="ch">e</span><span class="ch">o</span><span class="ch dot">.</span></h1>
+          <p class="kicker">@iamneo80 — on X</p>
+        </div>
+      </div>
+
       <p class="tagline anim d3">Posting on <strong>X</strong>. Nothing else, nowhere else — this page is the whole portfolio.</p>
 
       <div class="stats anim d4" aria-label="X statistics">
@@ -217,16 +234,9 @@
         <div class="stat"><span class="num" data-count="930406">930,406</span><span class="lbl">Views</span></div>
       </div>
 
-      <div class="photo anim d5">
-        <picture>
-          <source srcset="photo.webp" type="image/webp" />
-          <img src="photo.jpg" alt="Neo banner" width="1600" height="533" fetchpriority="high" />
-        </picture>
-      </div>
-
-      <div class="cta anim d6">
+      <div class="cta anim d5">
         <a class="btn" href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           Follow on X
         </a>
       </div>
