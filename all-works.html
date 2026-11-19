@@ -63,6 +63,12 @@
       .gate-rem { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; font-size: 13px; color: var(--muted); cursor: pointer; }
       .gate-rem input { width: 16px; height: 16px; accent-color: #ffffff; cursor: pointer; }
       @media (prefers-reduced-motion: reduce) { .list.play .item { animation: none; opacity: 1; } }
+      /* Subtle tap ripple */
+      .ripple-host { position: relative; overflow: hidden; }
+      .ripple-ink { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.16); transform: scale(0); opacity: 0.9; pointer-events: none; animation: ripIn 0.55s ease-out forwards; z-index: 1; }
+      .go .ripple-ink, .latest-watch .ripple-ink, .yes .ripple-ink, .gate-yes .ripple-ink { background: rgba(0, 0, 0, 0.13); }
+      @keyframes ripIn { to { transform: scale(2.4); opacity: 0; } }
+      @media (prefers-reduced-motion: reduce) { .ripple-ink { display: none; } }
       .badge { background: var(--green); color: #04150a; font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
       .surprise { margin-top: 14px; width: 100%; padding: 14px 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.55); background: rgba(255,255,255,0.08); color: var(--green); font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); }
       .surprise:hover { background: rgba(255,255,255,0.16); }
@@ -296,6 +302,29 @@
         try { ok = sessionStorage.getItem("neo-age-ok") === "1"; } catch (e) { }
         if (ok || !y) play();
         else y.addEventListener("click", function () { setTimeout(play, 80); });
+      })();
+    </script>
+    <script>
+      // Subtle tap ripple on buttons and pills
+      (function () {
+        if (!window.PointerEvent) return;
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        var SEL = "button, .btn, .go, .latest-watch, .coll-open, .back, .newtoast-watch";
+        document.addEventListener("pointerdown", function (e) {
+          var t = e.target && e.target.closest ? e.target.closest(SEL) : null;
+          if (!t) return;
+          var r = t.getBoundingClientRect();
+          if (!r.width || !r.height) return;
+          t.classList.add("ripple-host");
+          var d = Math.max(r.width, r.height);
+          var s = document.createElement("span");
+          s.className = "ripple-ink";
+          s.style.width = s.style.height = d + "px";
+          s.style.left = (e.clientX - r.left - d / 2) + "px";
+          s.style.top = (e.clientY - r.top - d / 2) + "px";
+          t.appendChild(s);
+          setTimeout(function () { s.remove(); }, 600);
+        }, { passive: true });
       })();
     </script>
   </body>

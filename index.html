@@ -433,6 +433,24 @@
       .gate-rem { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; font-size: 13px; color: var(--muted); cursor: pointer; }
       .gate-rem input { width: 16px; height: 16px; accent-color: #ffffff; cursor: pointer; }
       /* New-video toast for returning visitors */
+      /* Flowing light gradient on card borders (Style 2) */
+      .stats, .latest-slider, .coll-card { position: relative; }
+      .stats::before, .latest-slider::before, .coll-card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(100deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.48) 25%, rgba(255, 255, 255, 0.10) 50%, rgba(255, 255, 255, 0.48) 75%, rgba(255, 255, 255, 0.10) 100%); background-size: 300% 300%; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude; animation: borderFlow 14s ease-in-out infinite alternate; pointer-events: none; z-index: 3; }
+      @keyframes borderFlow { from { background-position: 0% 0%; } to { background-position: 100% 0%; } }
+      @media (prefers-reduced-motion: reduce) { .stats::before, .latest-slider::before, .coll-card::before { animation: none; } }
+      /* Global search results */
+      .gs-panel { position: fixed; top: 70px; left: 12px; right: 12px; z-index: 44; max-width: 560px; margin: 0 auto; border-radius: 16px; border: 1px solid var(--glass-border); background: rgba(16, 20, 17, 0.92); -webkit-backdrop-filter: blur(22px) saturate(160%); backdrop-filter: blur(22px) saturate(160%); box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5); overflow: hidden; display: none; }
+      .gs-panel.show { display: block; }
+      .gs-row { display: flex; align-items: center; gap: 10px; padding: 12px 15px; color: var(--text); text-decoration: none; font-size: 14.5px; font-weight: 600; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+      .gs-row:first-child { border-top: none; }
+      .gs-name { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .gs-tag { flex: none; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+      /* Subtle tap ripple */
+      .ripple-host { position: relative; overflow: hidden; }
+      .ripple-ink { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.16); transform: scale(0); opacity: 0.9; pointer-events: none; animation: ripIn 0.55s ease-out forwards; z-index: 1; }
+      .go .ripple-ink, .latest-watch .ripple-ink, .yes .ripple-ink, .gate-yes .ripple-ink { background: rgba(0, 0, 0, 0.13); }
+      @keyframes ripIn { to { transform: scale(2.4); opacity: 0; } }
+      @media (prefers-reduced-motion: reduce) { .ripple-ink { display: none; } }
       .newtoast { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 45; max-width: 560px; margin: 0 auto; display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 18px; border: 1px solid var(--glass-border); background: rgba(18, 22, 19, 0.88); -webkit-backdrop-filter: blur(22px) saturate(160%); backdrop-filter: blur(22px) saturate(160%); box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5); transform: translateY(180%); transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
       .newtoast.show { transform: translateY(0); }
       .newtoast-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
@@ -690,6 +708,7 @@
         <input id="search-input" type="search" placeholder="Search posts&hellip;" autocomplete="off" />
       </div>
     </div>
+    <div class="gs-panel" id="gs-panel"></div>
     <main>
       <div class="banner anim d1">
         <div class="banner-tools">
@@ -1220,6 +1239,64 @@
           setTimeout(function () { toast.classList.remove("show"); }, 12900);
           document.getElementById("newToastX").addEventListener("click", function () { toast.classList.remove("show"); });
         }).catch(function () { });
+      })();
+    </script>
+    <script>
+      // Global search: home search also finds every video by name
+      (function () {
+        var input = document.getElementById("search-input");
+        var panel = document.getElementById("gs-panel");
+        if (!input || !panel || !window.fetch || !window.DOMParser) return;
+        var videos = [];
+        fetch("all-works.html").then(function (r) { return r.text(); }).then(function (html) {
+          var doc = new DOMParser().parseFromString(html, "text/html");
+          Array.prototype.forEach.call(doc.querySelectorAll("a.item"), function (a) {
+            var clone = a.cloneNode(true);
+            var b = clone.querySelector(".badge"); if (b) b.remove();
+            var g = clone.querySelector(".go"); if (g) g.remove();
+            var nm = clone.textContent.trim();
+            if (nm) videos.push({ name: nm, href: a.getAttribute("href") });
+          });
+        }).catch(function () { });
+        function hide() { panel.classList.remove("show"); panel.innerHTML = ""; }
+        input.addEventListener("input", function () {
+          var q = input.value.trim().toLowerCase();
+          if (!q) { hide(); return; }
+          var hits = videos.filter(function (v) { return v.name.toLowerCase().indexOf(q) !== -1; }).slice(0, 6);
+          if (!hits.length) { hide(); return; }
+          panel.innerHTML = hits.map(function () { return '<a class="gs-row" target="_blank" rel="noopener noreferrer"><span class="gs-name"></span><span class="gs-tag">Video</span></a>'; }).join("");
+          Array.prototype.forEach.call(panel.querySelectorAll(".gs-row"), function (row, i) {
+            row.setAttribute("href", hits[i].href);
+            row.querySelector(".gs-name").textContent = hits[i].name;
+          });
+          panel.classList.add("show");
+        });
+        var back = document.getElementById("search-back");
+        if (back) back.addEventListener("click", hide);
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") hide(); });
+      })();
+    </script>
+    <script>
+      // Subtle tap ripple on buttons and pills
+      (function () {
+        if (!window.PointerEvent) return;
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        var SEL = "button, .btn, .go, .latest-watch, .coll-open, .back, .newtoast-watch";
+        document.addEventListener("pointerdown", function (e) {
+          var t = e.target && e.target.closest ? e.target.closest(SEL) : null;
+          if (!t) return;
+          var r = t.getBoundingClientRect();
+          if (!r.width || !r.height) return;
+          t.classList.add("ripple-host");
+          var d = Math.max(r.width, r.height);
+          var s = document.createElement("span");
+          s.className = "ripple-ink";
+          s.style.width = s.style.height = d + "px";
+          s.style.left = (e.clientX - r.left - d / 2) + "px";
+          s.style.top = (e.clientY - r.top - d / 2) + "px";
+          t.appendChild(s);
+          setTimeout(function () { s.remove(); }, 600);
+        }, { passive: true });
       })();
     </script>
   </body>
