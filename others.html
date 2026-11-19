@@ -36,7 +36,12 @@
       .item:hover { border-color: rgba(255,255,255,0.5); }
       .item svg { width: 19px; height: 19px; color: var(--green); flex: none; }
       .item .go { margin-left: auto; color: var(--green); font-size: 13.5px; font-weight: 700; white-space: nowrap; }
-      footer { margin-top: 44px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+      /* Back to top */
+      .to-top { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; border: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.04); padding: 8px 16px; border-radius: 999px; transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease, border-color 0.2s ease; }
+      .to-top:hover { color: var(--green); border-color: rgba(255, 255, 255, 0.5); }
+      .to-top:active { transform: scale(0.94); }
+      @media (prefers-reduced-motion: reduce) { .to-top:active { transform: none; } }
+      footer { margin-top: 0; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
       footer a { color: var(--muted); text-decoration: none; }
       footer a:hover { color: var(--green); }
       @media (max-width: 640px) { main { padding: 20px 16px 40px; } }
@@ -130,6 +135,9 @@
         <a class="item" href="https://x.com/iamneo80/status/1932655572689825932" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Soumya<span class="go">Watch</span></a>
           <div class="item item-play" data-href="https://x.com/iamneo80/status/1933768223838855580"><span class="irow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Anjana<span class="go">Watch now</span></span><div class="vpanel" hidden><div class="mslider"><div class="mslide"><video controls playsinline preload="none" referrerpolicy="no-referrer" poster="https://pbs.twimg.com/amplify_video_thumb/1933768134944800768/img/3qqzLWJejaX-sZwF.jpg" data-src="https://video.twimg.com/amplify_video/1933768134944800768/vid/avc1/720x1280/X8u8F7WV9FU1kBat.mp4?tag=14"></video></div><div class="mslide"><img class="vphoto" src="https://pbs.twimg.com/media/GtYf34pbkAAEH4V.jpg?name=medium" alt="Anjana photo" loading="lazy"></div></div><div class="mdots"><i class="on"></i><i></i></div><a class="vx" href="https://x.com/iamneo80/status/1933768223838855580" target="_blank" rel="noopener noreferrer">Watch on X</a></div></div>
       <p class="none" id="vnone" hidden>No videos match your search.</p>
+      </div>
+      <div style="width:100%;padding:40px 24px 16px;display:flex;justify-content:center;">
+        <a class="to-top" href="#">Back to top</a>
       </div>
       <footer style="justify-content:center;">
         <span>&copy; 2026 Neo. All posts live on <a href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">X</a>.</span>
