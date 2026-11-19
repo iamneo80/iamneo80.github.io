@@ -55,6 +55,14 @@
       .sort-opt .dot { width: 7px; height: 7px; border-radius: 50%; background: #ffffff; flex: none; opacity: 0; }
       .sort-opt.is-on .dot { opacity: 1; }
       @media (prefers-reduced-motion: reduce) { .sort-btn2:active { transform: none; } .sort-pop { transition: none; } }
+      /* Views count in rows, stagger-in, gate remember */
+      .item .vcount { margin-left: auto; font-size: 12.5px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+      .list.vc-on .item .go { margin-left: 0; }
+      .list.play .item { opacity: 0; animation: rowIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards; animation-delay: calc(var(--i, 0) * 35ms); }
+      @keyframes rowIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+      .gate-rem { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; font-size: 13px; color: var(--muted); cursor: pointer; }
+      .gate-rem input { width: 16px; height: 16px; accent-color: #ffffff; cursor: pointer; }
+      @media (prefers-reduced-motion: reduce) { .list.play .item { animation: none; opacity: 1; } }
       .badge { background: var(--green); color: #04150a; font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
       .surprise { margin-top: 14px; width: 100%; padding: 14px 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.55); background: rgba(255,255,255,0.08); color: var(--green); font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); }
       .surprise:hover { background: rgba(255,255,255,0.16); }
@@ -77,6 +85,7 @@
           <button type="button" class="yes" id="gate-yes">Yes</button>
           <button type="button" id="gate-no">No</button>
         </div>
+        <label class="gate-rem"><input type="checkbox" id="gate-rem" /><span>Remember me on this device</span></label>
         <p class="gate-msg" id="gate-msg" hidden>This page is 18+ only.</p>
       </div>
     </div>
@@ -96,6 +105,7 @@
           <button type="button" class="sort-opt" data-sort="new">Newest<span class="dot"></span></button>
           <button type="button" class="sort-opt" data-sort="old">Oldest<span class="dot"></span></button>
           <button type="button" class="sort-opt" data-sort="az">A&ndash;Z<span class="dot"></span></button>
+          <button type="button" class="sort-opt" data-sort="views">Most viewed<span class="dot"></span></button>
         </div>
       </div>
       <div class="list" data-new-count="2">
@@ -135,9 +145,9 @@
       (function () {
         var gate = document.getElementById('gate');
         document.body.style.overflow = 'hidden';
-        function unlock() { gate.classList.add('hide'); document.body.style.overflow = ''; try { sessionStorage.setItem('neo-age-ok', '1'); } catch (e) {} setTimeout(function () { gate.remove(); }, 400); }
+        function unlock() { gate.classList.add('hide'); document.body.style.overflow = ''; try { sessionStorage.setItem('neo-age-ok', '1'); var rb = document.getElementById('gate-rem'); if (rb && rb.checked) localStorage.setItem('neo-age-remember', '' + Date.now()); } catch (e) {} setTimeout(function () { gate.remove(); }, 400); }
         var ok = false;
-        try { ok = sessionStorage.getItem('neo-age-ok') === '1'; } catch (e) {}
+        try { ok = sessionStorage.getItem('neo-age-ok') === '1'; if (!ok) { var rem = +localStorage.getItem('neo-age-remember') || 0; if (rem && Date.now() - rem < 30 * 24 * 3600 * 1000) ok = true; } } catch (e) {}
         if (ok) { unlock(); }
         document.getElementById('gate-yes').addEventListener('click', unlock);
         document.getElementById('gate-no').addEventListener('click', function () {
@@ -219,7 +229,7 @@
         items.forEach(function (a, i) { a.setAttribute("data-idx", i); });
         function idOf(a) { var m = /status\/(\d+)/.exec(a.getAttribute("href") || ""); return m ? m[1] : ""; }
         function cmpId(x, y) { return x.length !== y.length ? x.length - y.length : (x < y ? -1 : x > y ? 1 : 0); }
-        function nameOf(a) { var c = a.cloneNode(true); var g = c.querySelector(".go"); if (g) g.remove(); var b = c.querySelector(".badge"); if (b) b.remove(); return c.textContent.trim().toLowerCase(); }
+        function nameOf(a) { var c = a.cloneNode(true); var g = c.querySelector(".go"); if (g) g.remove(); var b = c.querySelector(".badge"); if (b) b.remove(); var v = c.querySelector(".vcount"); if (v) v.remove(); return c.textContent.trim().toLowerCase(); }
         function close() { pop.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); }
         btn.addEventListener("click", function (e) {
           e.stopPropagation();
@@ -237,10 +247,55 @@
           if (mode === "az") sorted.sort(function (a, b) { return nameOf(a).localeCompare(nameOf(b)); });
           else if (mode === "new") sorted.sort(function (a, b) { return cmpId(idOf(b), idOf(a)); });
           else if (mode === "old") sorted.sort(function (a, b) { return cmpId(idOf(a), idOf(b)); });
+          else if (mode === "views") sorted.sort(function (a, b) { return (+b.getAttribute("data-views") || -1) - (+a.getAttribute("data-views") || -1); });
           else sorted.sort(function (a, b) { return (+a.getAttribute("data-idx")) - (+b.getAttribute("data-idx")); });
           sorted.forEach(function (a) { list.appendChild(a); });
           close();
         });
+      })();
+    </script>
+    <script>
+      // Live views count on each video row (public FxTwitter API; stored order untouched)
+      (function () {
+        var list = document.querySelector(".list");
+        if (!list || !window.fetch) return;
+        var items = Array.prototype.slice.call(list.querySelectorAll(".item"));
+        if (!items.length) return;
+        list.classList.add("vc-on");
+        function fmt(v) {
+          if (v >= 999500) { var s = (v / 1e6).toFixed(2); s = s.replace(/\.?0+$/, ""); return s + "M"; }
+          return (v / 1e3).toFixed(1) + "K";
+        }
+        items.forEach(function (a) {
+          var m = /status\/(\d+)/.exec(a.getAttribute("href") || "");
+          if (!m) return;
+          var span = document.createElement("span");
+          span.className = "vcount";
+          var go = a.querySelector(".go");
+          if (go) a.insertBefore(span, go); else a.appendChild(span);
+          fetch("https://api.fxtwitter.com/iamneo80/status/" + m[1]).then(function (r) { return r.json(); }).then(function (d) {
+            var v = d && d.tweet && d.tweet.views;
+            if (typeof v === "number" && v > 0) { a.setAttribute("data-views", v); span.textContent = fmt(v); }
+          }).catch(function () { });
+        });
+      })();
+    </script>
+    <script>
+      // Stagger the rows in after the age gate
+      (function () {
+        var list = document.querySelector(".list");
+        if (!list) return;
+        var items = list.querySelectorAll(".item");
+        Array.prototype.forEach.call(items, function (a, i) { a.style.setProperty("--i", i); });
+        function play() {
+          list.classList.add("play");
+          setTimeout(function () { list.classList.remove("play"); }, items.length * 35 + 700);
+        }
+        var y = document.getElementById("gate-yes");
+        var ok = false;
+        try { ok = sessionStorage.getItem("neo-age-ok") === "1"; } catch (e) { }
+        if (ok || !y) play();
+        else y.addEventListener("click", function () { setTimeout(play, 80); });
       })();
     </script>
   </body>

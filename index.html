@@ -430,6 +430,16 @@
       .gate-card h2 { font-size: 21px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
       .gate-card p { font-size: 14.5px; color: var(--muted); line-height: 1.55; margin-bottom: 24px; }
       .gate-btns { display: flex; gap: 10px; justify-content: center; }
+      .gate-rem { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; font-size: 13px; color: var(--muted); cursor: pointer; }
+      .gate-rem input { width: 16px; height: 16px; accent-color: #ffffff; cursor: pointer; }
+      /* New-video toast for returning visitors */
+      .newtoast { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 45; max-width: 560px; margin: 0 auto; display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 18px; border: 1px solid var(--glass-border); background: rgba(18, 22, 19, 0.88); -webkit-backdrop-filter: blur(22px) saturate(160%); backdrop-filter: blur(22px) saturate(160%); box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5); transform: translateY(180%); transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+      .newtoast.show { transform: translateY(0); }
+      .newtoast-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+      .newtoast-lbl { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+      .newtoast-title { font-size: 15.5px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .newtoast-watch { flex: none; background: var(--green); color: #06130b; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 999px; text-decoration: none; }
+      .newtoast-x { flex: none; font: inherit; font-size: 17px; line-height: 1; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.05); color: var(--muted); cursor: pointer; }
       .gate-btn {
         appearance: none;
         border-radius: 999px;
@@ -666,6 +676,7 @@
           <button class="gate-btn gate-yes" id="gate-yes" type="button">Yes</button>
           <button class="gate-btn gate-no" id="gate-no" type="button">No</button>
         </div>
+        <label class="gate-rem"><input type="checkbox" id="gate-rem" /><span>Remember me on this device</span></label>
       </div>
     </div>
     <div class="menu" id="menu">
@@ -851,12 +862,12 @@
       (function () {
         var gate = document.getElementById("gate");
         var ok = false;
-        try { ok = sessionStorage.getItem("neo-age-ok") === "1"; } catch (e) { }
+        try { ok = sessionStorage.getItem("neo-age-ok") === "1"; if (!ok) { var rem = +localStorage.getItem("neo-age-remember") || 0; if (rem && Date.now() - rem < 30 * 24 * 3600 * 1000) { ok = true; sessionStorage.setItem("neo-age-ok", "1"); } } } catch (e) { }
         if (ok) { gate.remove(); return; }
         gate.hidden = false;
         document.body.classList.add("gate-locked");
         document.getElementById("gate-yes").addEventListener("click", function () {
-          try { sessionStorage.setItem("neo-age-ok", "1"); } catch (e) { }
+          try { sessionStorage.setItem("neo-age-ok", "1"); var remBox = document.getElementById("gate-rem"); if (remBox && remBox.checked) localStorage.setItem("neo-age-remember", "" + Date.now()); } catch (e) { }
           gate.classList.add("gate-out");
           document.body.classList.remove("gate-locked");
           setTimeout(function () { gate.remove(); }, 480);
@@ -1172,6 +1183,43 @@
         strip.addEventListener('scroll', function () {
           if (!ticking) { ticking = true; window.requestAnimationFrame(function () { upd(); ticking = false; }); }
         }, { passive: true });
+      })();
+    </script>
+    <div class="newtoast" id="newToast" role="status">
+      <span class="newtoast-body"><span class="newtoast-lbl">New video</span><span class="newtoast-title" id="newToastTitle"></span></span>
+      <a class="newtoast-watch" id="newToastWatch" href="#" target="_blank" rel="noopener noreferrer">Watch</a>
+      <button class="newtoast-x" id="newToastX" type="button" aria-label="Dismiss">&times;</button>
+    </div>
+    <script>
+      // Tell returning visitors when a newer video has arrived since their last visit
+      (function () {
+        if (!window.fetch || !window.DOMParser) return;
+        function cmpId(x, y) { return x.length !== y.length ? x.length - y.length : (x < y ? -1 : x > y ? 1 : 0); }
+        fetch("all-works.html").then(function (r) { return r.text(); }).then(function (html) {
+          var doc = new DOMParser().parseFromString(html, "text/html");
+          var newest = null;
+          Array.prototype.forEach.call(doc.querySelectorAll("a.item"), function (a) {
+            var m = /status\/(\d+)/.exec(a.getAttribute("href") || "");
+            if (!m) return;
+            if (!newest || cmpId(m[1], newest.id) > 0) {
+              var clone = a.cloneNode(true);
+              var b = clone.querySelector(".badge"); if (b) b.remove();
+              var g = clone.querySelector(".go"); if (g) g.remove();
+              newest = { id: m[1], href: a.getAttribute("href"), name: clone.textContent.trim() };
+            }
+          });
+          if (!newest) return;
+          var seen = null;
+          try { seen = localStorage.getItem("neo-seen-newest"); } catch (e) { }
+          try { localStorage.setItem("neo-seen-newest", newest.id); } catch (e) { }
+          if (!seen || cmpId(newest.id, seen) <= 0) return;
+          var toast = document.getElementById("newToast");
+          document.getElementById("newToastTitle").textContent = newest.name;
+          document.getElementById("newToastWatch").setAttribute("href", newest.href);
+          setTimeout(function () { toast.classList.add("show"); }, 900);
+          setTimeout(function () { toast.classList.remove("show"); }, 12900);
+          document.getElementById("newToastX").addEventListener("click", function () { toast.classList.remove("show"); });
+        }).catch(function () { });
       })();
     </script>
   </body>
