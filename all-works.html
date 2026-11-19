@@ -44,6 +44,17 @@
       .search input { flex: 1; min-width: 0; background: none; border: none; outline: none; color: var(--ink); font-size: 15px; font-family: inherit; }
       .search input::placeholder { color: var(--muted); }
       .none { margin-top: 18px; color: var(--muted); font-size: 14px; text-align: center; }
+      /* Sort button + popup options */
+      .sortwrap { position: relative; display: flex; justify-content: flex-end; margin-top: 12px; }
+      .sort-btn2 { font: inherit; font-size: 13px; font-weight: 700; padding: 8px 18px; border-radius: 999px; border: 1px solid var(--glass-border); background: var(--glass); color: var(--ink); cursor: pointer; -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease; }
+      .sort-btn2:active { transform: scale(0.94); }
+      .sort-pop { position: absolute; top: calc(100% + 8px); right: 0; z-index: 30; min-width: 176px; padding: 6px; border-radius: 18px; border: 1px solid var(--glass-border); background: rgba(18, 22, 19, 0.82); -webkit-backdrop-filter: blur(22px) saturate(160%); backdrop-filter: blur(22px) saturate(160%); box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5); opacity: 0; visibility: hidden; transform: translateY(-5px) scale(0.97); transform-origin: top right; transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.18s; }
+      .sort-pop.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+      .sort-opt { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; font: inherit; font-size: 14px; font-weight: 600; text-align: left; padding: 10px 13px; border: none; border-radius: 12px; background: none; color: var(--ink); cursor: pointer; }
+      .sort-opt:hover { background: rgba(255, 255, 255, 0.08); }
+      .sort-opt .dot { width: 7px; height: 7px; border-radius: 50%; background: #ffffff; flex: none; opacity: 0; }
+      .sort-opt.is-on .dot { opacity: 1; }
+      @media (prefers-reduced-motion: reduce) { .sort-btn2:active { transform: none; } .sort-pop { transition: none; } }
       .badge { background: var(--green); color: #04150a; font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
       .surprise { margin-top: 14px; width: 100%; padding: 14px 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.55); background: rgba(255,255,255,0.08); color: var(--green); font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer; -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); }
       .surprise:hover { background: rgba(255,255,255,0.16); }
@@ -78,6 +89,15 @@
         <input id="vsearch" type="search" placeholder="Search videos" aria-label="Search videos" autocomplete="off" />
       </div>
       <button class="surprise" id="surprise" type="button">Surprise me</button>
+      <div class="sortwrap">
+        <button type="button" class="sort-btn2" id="sortBtn" aria-haspopup="true" aria-expanded="false">Sort</button>
+        <div class="sort-pop" id="sortPop" role="menu">
+          <button type="button" class="sort-opt is-on" data-sort="default">Default<span class="dot"></span></button>
+          <button type="button" class="sort-opt" data-sort="new">Newest<span class="dot"></span></button>
+          <button type="button" class="sort-opt" data-sort="old">Oldest<span class="dot"></span></button>
+          <button type="button" class="sort-opt" data-sort="az">A&ndash;Z<span class="dot"></span></button>
+        </div>
+      </div>
       <div class="list" data-new-count="2">
         <a class="item" href="https://x.com/iamneo80/status/2111244845604057303" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>INSTA vs Reality (part-05)<span class="go">Watch</span></a>
         <a class="item" href="https://x.com/iamneo80/status/2053791773772988765" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>INSTA vs Reality (part-04)<span class="go">Watch</span></a>
@@ -187,6 +207,41 @@
     </script>
     <script>
       if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(function () {}); }
+    </script>
+    <script>
+      // Sort button opens a popup; tapping an option sorts the list
+      (function () {
+        var list = document.querySelector(".list");
+        var btn = document.getElementById("sortBtn");
+        var pop = document.getElementById("sortPop");
+        if (!list || !btn || !pop) return;
+        var items = Array.prototype.slice.call(list.querySelectorAll(".item"));
+        items.forEach(function (a, i) { a.setAttribute("data-idx", i); });
+        function idOf(a) { var m = /status\/(\d+)/.exec(a.getAttribute("href") || ""); return m ? m[1] : ""; }
+        function cmpId(x, y) { return x.length !== y.length ? x.length - y.length : (x < y ? -1 : x > y ? 1 : 0); }
+        function nameOf(a) { var c = a.cloneNode(true); var g = c.querySelector(".go"); if (g) g.remove(); var b = c.querySelector(".badge"); if (b) b.remove(); return c.textContent.trim().toLowerCase(); }
+        function close() { pop.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); }
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var open = pop.classList.toggle("open");
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+        document.addEventListener("click", function (e) { if (!pop.contains(e.target)) close(); });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+        pop.addEventListener("click", function (e) {
+          var opt = e.target.closest ? e.target.closest(".sort-opt") : null;
+          if (!opt) return;
+          Array.prototype.forEach.call(pop.querySelectorAll(".sort-opt"), function (o) { o.classList.toggle("is-on", o === opt); });
+          var mode = opt.getAttribute("data-sort");
+          var sorted = items.slice();
+          if (mode === "az") sorted.sort(function (a, b) { return nameOf(a).localeCompare(nameOf(b)); });
+          else if (mode === "new") sorted.sort(function (a, b) { return cmpId(idOf(b), idOf(a)); });
+          else if (mode === "old") sorted.sort(function (a, b) { return cmpId(idOf(a), idOf(b)); });
+          else sorted.sort(function (a, b) { return (+a.getAttribute("data-idx")) - (+b.getAttribute("data-idx")); });
+          sorted.forEach(function (a) { list.appendChild(a); });
+          close();
+        });
+      })();
     </script>
   </body>
 </html>

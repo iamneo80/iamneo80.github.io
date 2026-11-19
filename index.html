@@ -574,7 +574,7 @@
       /* Latest spotlight */
       .latest { margin-top: 44px; }
       .latest h2 { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--green); margin-bottom: 16px; }
-      .latest-card { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--ink); background: linear-gradient(120deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04) 58%); border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 22px; padding: 20px 22px; -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); transition: border-color 0.2s ease, transform 0.2s ease; }
+      .latest-card { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--ink); background: linear-gradient(120deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015) 58%); border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 22px; padding: 20px 22px; transition: border-color 0.2s ease, transform 0.2s ease; }
       .latest-card:hover { border-color: rgba(255, 255, 255, 0.7); transform: translateY(-2px); }
       .latest-play { flex: none; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.55); color: var(--green); }
       .latest-play svg { width: 22px; height: 22px; margin-left: 2px; }
@@ -583,7 +583,8 @@
       .latest-label { font-size: 10.5px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--green); font-weight: 700; }
       .badge { background: var(--green); color: #04150a; font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
       .latest-title { display: block; font-size: 20px; font-weight: 800; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-      .latest-watch { flex: none; color: #06130b; background: var(--green); font-size: 13.5px; font-weight: 700; padding: 9px 16px; border-radius: 999px; white-space: nowrap; }
+      .latest-watch { position: relative; flex: none; color: #06130b; background: var(--green); font-size: 13.5px; font-weight: 700; padding: 9px 16px; border-radius: 999px; white-space: nowrap; }
+      .latest-watch::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 16px 2px rgba(255, 255, 255, 0.22); opacity: 0; pointer-events: none; }
 
       /* Top post cards */
       .post-cards { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
@@ -617,9 +618,9 @@
       .btn:active, .icon-btn:active, .to-top:active { transform: scale(0.94); }
       .post-card, .coll-card, .latest-card { transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease, box-shadow 0.25s ease; }
       .post-card:active, .coll-card:active, .latest-card:active { transform: scale(0.985); }
-      .latest-watch { animation: watchPulse 2.6s ease-in-out infinite; }
-      @keyframes watchPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } 50% { box-shadow: 0 0 16px 2px rgba(255, 255, 255, 0.22); } }
-      @media (prefers-reduced-motion: reduce) { .latest-watch { animation: none; } .btn:active, .icon-btn:active, .to-top:active, .post-card:active, .coll-card:active, .latest-card:active { transform: none; } }
+      .latest-watch::after { animation: watchPulse 2.6s ease-in-out infinite; }
+      @keyframes watchPulse { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+      @media (prefers-reduced-motion: reduce) { .latest-watch::after { animation: none; } .btn:active, .icon-btn:active, .to-top:active, .post-card:active, .coll-card:active, .latest-card:active { transform: none; } }
     
       /* Top posts: horizontal poster carousel */
       .tp-strip { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 2px 8px; margin-top: 12px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
@@ -637,9 +638,9 @@
       /* TP: title inside poster, bottom overlay */
       .tp-bottom { position: relative; z-index: 1; margin-top: auto; }
       /* Latest auto-slider */
-      .latest-slider { overflow: hidden; border-radius: 22px; }
-      .latest-track { display: flex; transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1); }
-      .latest-track .latest-card { flex: 0 0 100%; }
+      .latest-slider { overflow: hidden; border-radius: 22px; background: linear-gradient(120deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04) 58%); -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); }
+      .latest-track { display: flex; position: relative; transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform; }
+      .latest-track .latest-card { flex: 0 0 100%; min-width: 0; max-width: 100%; }
       @media (prefers-reduced-motion: reduce) { .latest-track { transition: none; } }
       /* Badges on Top Posts poster cards */
       .tp-badge { position: absolute; top: 12px; z-index: 2; background: #ffffff; color: #0a0c0a; font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35); }
@@ -1065,7 +1066,7 @@
           if (n < 2) return;
           if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
           var i = 0;
-          function go() { if (document.hidden) return; i = (i + 1) % n; track.style.transform = "translateX(-" + i * 100 + "%)"; }
+          function go() { if (document.hidden) return; i = (i + 1) % n; var card = track.children[i]; if (!card) return; if (i === 0) { track.style.transition = "none"; track.style.transform = "translateX(0px)"; void track.offsetWidth; track.style.transition = ""; return; } track.style.transform = "translateX(" + (-card.offsetLeft) + "px)"; }
           function start() { if (!sliderTimer) sliderTimer = setInterval(go, 3500); }
           function stop() { if (sliderTimer) { clearInterval(sliderTimer); sliderTimer = null; } }
           start();
