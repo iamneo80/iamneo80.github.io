@@ -12,8 +12,8 @@
       * { box-sizing: border-box; margin: 0; padding: 0; }
       html { color-scheme: dark; -webkit-tap-highlight-color: transparent; }
       body { background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Inter, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
-      main { max-width: 880px; margin: 0 auto; padding: 28px 24px 48px; }
-      .back { display: inline-flex; align-items: center; gap: 7px; color: var(--ink); text-decoration: none; font-size: 13.5px; font-weight: 600; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.04); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); padding: 9px 16px; border-radius: 999px; }
+      main { max-width: 880px; margin: 0 auto; padding: 28px 24px 48px; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+      .back { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; color: var(--ink); text-decoration: none; font-size: 13.5px; font-weight: 600; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.04); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); padding: 9px 16px; border-radius: 999px; }
       .back:hover { color: var(--green); border-color: rgba(255,255,255,0.5); }
       h1 { margin-top: 30px; font-size: clamp(34px, 8vw, 54px); font-weight: 800; letter-spacing: 0.04em; }
       h1 .dot { color: var(--green); }
@@ -136,7 +136,7 @@
           <div class="item item-play" data-href="https://x.com/iamneo80/status/1933768223838855580"><span class="irow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/></svg>Anjana<span class="go">Watch now</span></span><div class="vpanel" hidden><div class="mslider"><div class="mslide"><video controls playsinline preload="none" referrerpolicy="no-referrer" poster="https://pbs.twimg.com/amplify_video_thumb/1933768134944800768/img/3qqzLWJejaX-sZwF.jpg" data-src="https://video.twimg.com/amplify_video/1933768134944800768/vid/avc1/720x1280/X8u8F7WV9FU1kBat.mp4?tag=14"></video></div><div class="mslide"><img class="vphoto" src="https://pbs.twimg.com/media/GtYf34pbkAAEH4V.jpg?name=medium" alt="Anjana photo" loading="lazy"></div></div><div class="mdots"><i class="on"></i><i></i></div><a class="vx" href="https://x.com/iamneo80/status/1933768223838855580" target="_blank" rel="noopener noreferrer">Watch on X</a></div></div>
       <p class="none" id="vnone" hidden>No videos match your search.</p>
       </div>
-      <div style="width:100%;padding:40px 24px 16px;display:flex;justify-content:center;">
+      <div style="width:100%;margin-top:auto;padding:40px 24px 16px;display:flex;justify-content:center;">
         <a class="to-top" href="#">Back to top</a>
       </div>
       <footer style="justify-content:center;">
