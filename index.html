@@ -161,8 +161,12 @@
         transition: max-height 0.3s cubic-bezier(0.22, 1, 0.36, 1);
       }
       .search-strip.open { max-height: 76px; }
-      .search-in { max-width: 880px; margin: 0 auto; padding: 12px 24px; }
+      .search-in { max-width: 880px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; gap: 10px; }
+      .search-back { flex: none; font: inherit; font-size: 13px; font-weight: 700; padding: 9px 15px; border-radius: 999px; border: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.05); color: var(--ink); cursor: pointer; transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease; }
+      .search-back:active { transform: scale(0.94); }
       .search-in input {
+        flex: 1;
+        min-width: 0;
         width: 100%;
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid var(--glass-border);
@@ -671,6 +675,7 @@
     </div>
     <div class="search-strip" id="search-strip">
       <div class="search-in">
+        <button class="search-back" id="search-back" type="button">Back</button>
         <input id="search-input" type="search" placeholder="Search posts&hellip;" autocomplete="off" />
       </div>
     </div>
@@ -709,6 +714,21 @@
         <div class="stat"><span class="num">1M+</span><span class="lbl">Views</span></div>
       </div>
 
+
+      <section class="about rv" id="about" aria-label="About" style="margin-top:36px;">
+        <h2>About</h2>
+        <div class="about-card">
+          <p>Hello, I&rsquo;m <strong>NEO</strong>. I create NSFW video edits on <strong>X</strong>, transforming raw clips into fast, scroll-stopping content. Check out my account and follow if you enjoy the work.</p>
+        </div>
+      </section>
+
+      <div class="stats-plain rv" aria-label="Statistics in full">
+        <span>Followers <b class="pnum" data-count="21672">21672</b></span>
+        <span>Posts <b class="pnum" data-count="215">215</b></span>
+        <span>Viewers <b class="pnum" data-count="1016227">1016227</b></span>
+      </div>
+
+
       <section class="latest rv" id="latest" aria-label="Latest videos">
         <h2>Latest</h2>
         <div class="latest-slider">
@@ -724,20 +744,6 @@
           </div>
         </div>
       </section>
-
-      <section class="about rv" id="about" aria-label="About" style="margin-top:36px;">
-        <h2>About</h2>
-        <div class="about-card">
-          <p>Hello, I&rsquo;m <strong>NEO</strong>. I create NSFW video edits on <strong>X</strong>, transforming raw clips into fast, scroll-stopping content. Check out my account and follow if you enjoy the work.</p>
-        </div>
-      </section>
-
-      <div class="stats-plain rv" aria-label="Statistics in full">
-        <span>Followers <b class="pnum" data-count="21672">21672</b></span>
-        <span>Posts <b class="pnum" data-count="215">215</b></span>
-        <span>Viewers <b class="pnum" data-count="1016227">1016227</b></span>
-      </div>
-
 
       <section class="posts rv" id="posts" aria-label="Top posts">
         <h2>Top posts</h2>
@@ -869,6 +875,7 @@
         var searchBtn = document.getElementById('search-btn');
         var strip = document.getElementById('search-strip');
         var input = document.getElementById('search-input');
+        var backBtn = document.getElementById('search-back');
         function closeMenu() { menu.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }
         menuBtn.addEventListener('click', function (e) {
           e.stopPropagation();
@@ -882,6 +889,12 @@
         searchBtn.addEventListener('click', function () {
           var open = strip.classList.toggle('open');
           if (open) { input.focus(); document.getElementById('posts').scrollIntoView({ behavior: 'smooth' }); }
+        });
+        backBtn.addEventListener('click', function () {
+          input.value = '';
+          input.dispatchEvent(new Event('input'));
+          strip.classList.remove('open');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         });
         var items = Array.prototype.slice.call(document.querySelectorAll('.posts .post-card, .posts .post-row'));
         var none = document.getElementById('search-none');
