@@ -116,7 +116,6 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.8-3.8"/></svg>
         <input id="vsearch" type="search" placeholder="Search videos" aria-label="Search videos" autocomplete="off" />
       </div>
-      <button class="surprise" id="surprise" type="button">Surprise me</button>
       <div class="sortwrap">
         <button type="button" class="sort-btn2" id="sortBtn" aria-haspopup="true" aria-expanded="false">Sort</button>
         <div class="sort-pop" id="sortPop" role="menu">
@@ -168,19 +167,6 @@
             if (show) visible++;
           });
           if (none) none.hidden = visible !== 0;
-        });
-      })();
-    </script>
-    <script>
-      // Surprise me: open a random video from this page
-      (function () {
-        var btn = document.getElementById("surprise");
-        if (!btn) return;
-        btn.addEventListener("click", function () {
-          var items = document.querySelectorAll(".item");
-          if (!items.length) return;
-          var pick = items[Math.floor(Math.random() * items.length)];
-          window.open(pick.href, "_blank", "noopener");
         });
       })();
     </script>
