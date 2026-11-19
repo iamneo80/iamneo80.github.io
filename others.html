@@ -304,10 +304,25 @@
           var open = item.classList.toggle("open");
           panel.hidden = !open;
           if (open) {
-            if (!vid.getAttribute("src")) vid.setAttribute("src", vid.getAttribute("data-src"));
-            var pr = vid.play();
-            if (pr) pr.catch(function () {});
             go.textContent = "Close";
+            if (vid.getAttribute("src")) {
+              var p0 = vid.play();
+              if (p0) p0.catch(function () {});
+            } else if (!vid.getAttribute("data-loading")) {
+              vid.setAttribute("data-loading", "1");
+              // Load the file with no Referer (X's video CDN blocks other sites' referers),
+              // then play it from a local blob URL — works in every browser.
+              fetch(vid.getAttribute("data-src"), { referrerPolicy: "no-referrer" }).then(function (r) {
+                if (!r.ok) throw new Error("fetch failed");
+                return r.blob();
+              }).then(function (b) {
+                vid.src = URL.createObjectURL(b);
+                if (item.classList.contains("open")) { var p1 = vid.play(); if (p1) p1.catch(function () {}); }
+              }).catch(function () {
+                vid.setAttribute("src", vid.getAttribute("data-src"));
+                if (item.classList.contains("open")) { var p2 = vid.play(); if (p2) p2.catch(function () {}); }
+              });
+            }
           } else {
             vid.pause();
             go.textContent = "Watch now";
