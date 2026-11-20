@@ -1,8 +1,8 @@
 // N E O — offline cache: pages network-first so updates show fast, assets cache-first
-var CACHE = 'neo-v6';
+var CACHE = 'neo-v7';
 var CORE = ['./', 'index.html', 'mallu.html', 'resmi-nair.html', 'insta-vs-reality.html', 'all-works.html', 'others.html',
   'photo.webp', 'photo.jpg', 'avatar.webp', 'avatar.jpg', 'favicon.png', 'apple-touch-icon.png',
-  'icon-192.png', 'icon-512.png', 'top1.webp', 'top1.jpg', 'top2.webp', 'top2.jpg', 'top3.webp', 'top3.jpg', 'top4.webp', 'top4.jpg', 'top5.webp', 'top5.jpg', 'manifest.webmanifest'];
+  'icon-192.png', 'icon-512.png', 'top1.webp', 'top1.jpg', 'top2.webp', 'top2.jpg', 'top3.webp', 'top3.jpg', 'top4.webp', 'top4.jpg', 'top5.webp', 'top5.jpg', 'top6.webp', 'top6.jpg', 'top7.webp', 'top7.jpg', 'manifest.webmanifest'];
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(CORE); }).then(function () { return self.skipWaiting(); }));
 });
