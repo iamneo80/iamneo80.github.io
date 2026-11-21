@@ -684,6 +684,20 @@
       .tp-badge.newb { right: 12px; }
       .tp-title-in { margin: 0 0 6px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; text-shadow: 0 1px 14px rgba(0, 0, 0, 0.5); }
       .tp-strip .post-card.poster .tp-bottom .post-meta { margin-top: 0; }
+    
+      .tp-strip .post-meta svg { width: 13px; height: 13px; vertical-align: -2px; }
+      .sheet-back { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,0.55); opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
+      .sheet-back.open { opacity: 1; pointer-events: auto; }
+      .sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 61; max-width: 520px; margin: 0 auto; background: rgba(18,20,19,0.92); -webkit-backdrop-filter: blur(22px) saturate(160%); backdrop-filter: blur(22px) saturate(160%); border: 1px solid rgba(255,255,255,0.14); border-bottom: none; border-radius: 26px 26px 0 0; padding: 14px 18px 26px; transform: translateY(105%); transition: transform 0.32s cubic-bezier(0.22,1,0.36,1); }
+      .sheet.open { transform: translateY(0); }
+      .sheet-grip { display: block; width: 40px; height: 4.5px; border-radius: 3px; background: rgba(255,255,255,0.3); margin: 0 auto 14px; }
+      .sheet-row { display: flex; gap: 14px; align-items: center; }
+      .sheet-row img { width: 64px; height: 100px; object-fit: cover; border-radius: 12px; flex: none; }
+      .sheet-title { font-size: 17.5px; font-weight: 700; line-height: 1.3; }
+      .sheet-meta { color: var(--muted); font-size: 13.5px; font-weight: 600; margin-top: 5px; }
+      .sheet-meta svg { width: 14px; height: 14px; vertical-align: -2.5px; }
+      .sheet-x { position: absolute; top: 12px; right: 14px; width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); color: #fff; font-size: 16px; cursor: pointer; }
+      .sheet-go { display: block; margin-top: 18px; text-align: center; padding: 14px; border-radius: 999px; background: #ffffff; color: #101312; font-weight: 800; font-size: 15.5px; text-decoration: none; }
     </style>
       <link rel="manifest" href="manifest.webmanifest" />
     <meta name="theme-color" content="#060807" />
@@ -787,7 +801,7 @@
             <span class="tp-img"><picture><source srcset="top1.webp" type="image/webp" /><img src="top1.jpg" alt="INSTA vs REALITY (part-03) poster" width="720" height="1280" style="object-position: center 12%;" /></picture></span>
             <div class="tp-bottom"><p class="tp-title-in">INSTA vs REALITY (part-03)</p>
             <div class="post-meta">
-              <span>1.15M views &middot; 15.04K likes</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>1.58M &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 12.6L12 20l-7.5-7.4A5 5 0 1 1 12 6.2a5 5 0 1 1 7.5 6.4z"/></svg>15.24K &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>903 &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>17</span>
               <span class="view">View on X</span>
             </div></div>
           </a>
@@ -796,7 +810,7 @@
             <span class="tp-img"><picture><source srcset="top4.webp" type="image/webp" /><img src="top4.jpg" alt="INSTA vs REALITY (part-05) poster" width="720" height="1280" style="object-position: center 30%;" /></picture></span>
             <div class="tp-bottom"><p class="tp-title-in">INSTA vs REALITY (part-05)</p>
             <div class="post-meta">
-              <span>596.3K views &middot; 5.94K likes</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>624.1K &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 12.6L12 20l-7.5-7.4A5 5 0 1 1 12 6.2a5 5 0 1 1 7.5 6.4z"/></svg>5.99K &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>969 &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>27</span>
               <span class="view">View on X</span>
             </div></div>
           </a>
@@ -804,7 +818,7 @@
             <span class="tp-img"><picture><source srcset="top3.webp" type="image/webp" /><img src="top3.jpg" alt="INSTA vs REALITY (part-02) poster" width="720" height="1280" style="object-position: center 88%;" /></picture></span>
             <div class="tp-bottom"><p class="tp-title-in">INSTA vs REALITY (part-02)</p>
             <div class="post-meta">
-              <span>572.6K views &middot; 4.53K likes</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>584.3K &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 12.6L12 20l-7.5-7.4A5 5 0 1 1 12 6.2a5 5 0 1 1 7.5 6.4z"/></svg>4.56K &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>626 &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>23</span>
               <span class="view">View on X</span>
             </div></div>
           </a>
@@ -813,7 +827,7 @@
             <span class="tp-img"><picture><source srcset="top5.webp" type="image/webp" /><img src="top5.jpg" alt="Sydney Sweeney NSFW Edit poster" width="720" height="1281" style="object-position: center 15%;" /></picture></span>
             <div class="tp-bottom"><p class="tp-title-in">Sydney Sweeney NSFW Edit</p>
             <div class="post-meta">
-              <span>473.5K views &middot; 6.68K likes</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>543.7K &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 12.6L12 20l-7.5-7.4A5 5 0 1 1 12 6.2a5 5 0 1 1 7.5 6.4z"/></svg>6.7K &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>311 &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>3</span>
               <span class="view">View on X</span>
             </div></div>
           </a>
@@ -821,7 +835,7 @@
             <span class="tp-img"><picture><source srcset="top2.webp" type="image/webp" /><img src="top2.jpg" alt="Resmi NSFW Edit (3) poster" width="720" height="1281" style="object-position: center 8%;" /></picture></span>
             <div class="tp-bottom"><p class="tp-title-in">Resmi NSFW Edit (3)</p>
             <div class="post-meta">
-              <span>468.4K views &middot; 2.87K likes</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>478.2K &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 12.6L12 20l-7.5-7.4A5 5 0 1 1 12 6.2a5 5 0 1 1 7.5 6.4z"/></svg>2.93K &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>422 &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>19</span>
               <span class="view">View on X</span>
             </div></div>
           </a>
@@ -829,7 +843,7 @@
             <span class="tp-img"><picture><source srcset="top6.webp" type="image/webp" /><img src="top6.jpg" alt="Diya Gowda Edit poster" width="720" height="1280" style="object-position: center 25%;" /></picture></span>
             <div class="tp-bottom"><p class="tp-title-in">Diya Gowda Edit</p>
             <div class="post-meta">
-              <span>326.5K views &middot; 1.76K likes</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>352.1K &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 12.6L12 20l-7.5-7.4A5 5 0 1 1 12 6.2a5 5 0 1 1 7.5 6.4z"/></svg>1.78K &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>316 &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>6</span>
               <span class="view">View on X</span>
             </div></div>
           </a>
@@ -837,7 +851,7 @@
             <span class="tp-img"><picture><source srcset="top7.webp" type="image/webp" /><img src="top7.jpg" alt="Resmi NSFW Edit (5) poster" width="720" height="1275" style="object-position: center 15%;" /></picture></span>
             <div class="tp-bottom"><p class="tp-title-in">Resmi NSFW Edit (5)</p>
             <div class="post-meta">
-              <span>269.2K views &middot; 1.75K likes</span>
+              <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>271.1K &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 12.6L12 20l-7.5-7.4A5 5 0 1 1 12 6.2a5 5 0 1 1 7.5 6.4z"/></svg>1.76K &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>270 &middot; <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>12</span>
               <span class="view">View on X</span>
             </div></div>
           </a>
@@ -1038,6 +1052,7 @@
           if (n >= 1000) { var v = Math.round(n / 10) / 100; return (v % 1 === 0 ? v.toFixed(0) : String(v)) + "K"; }
           return String(n);
         }
+        var EYE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>', HRT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 12.6L12 20l-7.5-7.4A5 5 0 1 1 12 6.2a5 5 0 1 1 7.5 6.4z"/></svg>', RPT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>', CMT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>';
         var cards = document.querySelectorAll(".tp-strip .post-card");
         cards.forEach(function (card) {
           var m = /status\/(\d+)/.exec(card.getAttribute("href") || "");
@@ -1053,7 +1068,8 @@
                 if (!d || !d.tweet) return;
                 var v = parseInt(d.tweet.views, 10), l = parseInt(d.tweet.likes, 10);
                 if (isNaN(v) || isNaN(l) || v < 1 || l < 0) return;
-                meta.textContent = fmtViews(v) + " views \u00B7 " + fmtLikes(l) + " likes";
+                var rt = parseInt(d.tweet.retweets, 10), rp2 = parseInt(d.tweet.replies, 10);
+                meta.innerHTML = EYE + fmtViews(v) + " \u00B7 " + HRT + fmtLikes(l) + " \u00B7 " + RPT + fmtLikes(isNaN(rt) ? 0 : rt) + " \u00B7 " + CMT + fmtLikes(isNaN(rp2) ? 0 : rp2);
                 var mb = card.querySelector(".tp-badge.million");
                 if (v >= 1000000 && !mb) { var s = document.createElement("span"); s.className = "tp-badge million"; s.textContent = "1M views"; card.appendChild(s); }
                 if (v < 1000000 && mb) mb.remove();
@@ -1359,5 +1375,42 @@
       })();
     </script>
   
-</body>
+
+    <div class="sheet-back" id="sheetBack"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="false">
+      <span class="sheet-grip"></span>
+      <button class="sheet-x" id="sheetX" type="button" aria-label="Close">&times;</button>
+      <div class="sheet-row">
+        <img id="sheetImg" alt="" />
+        <div><p class="sheet-title" id="sheetTitle"></p><p class="sheet-meta" id="sheetMeta"></p></div>
+      </div>
+      <a class="sheet-go" id="sheetGo" href="#" target="_blank" rel="noopener noreferrer">View on X</a>
+    </div>
+    <script>
+      // Top Posts preview sheet: tapping a poster opens a sheet instead of leaving for X
+      (function () {
+        var back = document.getElementById('sheetBack'), sheet = document.getElementById('sheet');
+        if (!back || !sheet) return;
+        var sImg = document.getElementById('sheetImg'), sTitle = document.getElementById('sheetTitle'),
+            sMeta = document.getElementById('sheetMeta'), sGo = document.getElementById('sheetGo');
+        function closeSheet() { back.classList.remove('open'); sheet.classList.remove('open'); }
+        document.getElementById('sheetX').addEventListener('click', closeSheet);
+        back.addEventListener('click', closeSheet);
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
+        document.querySelectorAll('.tp-strip .post-card').forEach(function (c) {
+          c.addEventListener('click', function (e) {
+            e.preventDefault();
+            var img = c.querySelector('img');
+            if (img) sImg.src = img.getAttribute('src');
+            var t = c.querySelector('.tp-title-in');
+            sTitle.textContent = t ? t.textContent : '';
+            var meta = c.querySelector('.post-meta span');
+            sMeta.innerHTML = meta ? meta.innerHTML : '';
+            sGo.setAttribute('href', c.getAttribute('href'));
+            back.classList.add('open'); sheet.classList.add('open');
+          });
+        });
+      })();
+    </script>
+  </body>
 </html>
