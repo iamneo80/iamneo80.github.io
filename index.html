@@ -673,6 +673,20 @@
     
       /* TP: title inside poster, bottom overlay */
       .tp-bottom { position: relative; z-index: 1; margin-top: auto; }
+      #pageviews { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 12.5px; margin-left: 14px; }
+      #pageviews[hidden] { display: none; }
+      #pageviews svg { width: 14px; height: 14px; }
+      /* Coming Soon popup */
+      .soon-back { position: fixed; inset: 0; z-index: 90; background: rgba(0, 0, 0, 0.55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 22px; }
+      .soon-back.open { display: flex; }
+      .soon-card { position: relative; width: 100%; max-width: 320px; aspect-ratio: 3 / 4; border-radius: 28px; overflow: hidden; background: #101010; border: 1px solid rgba(255, 255, 255, 0.22); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55); }
+      .soon-card img.poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 0%; }
+      .soon-grad { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.88) 82%); }
+      .soon-x { position: absolute; top: 12px; right: 12px; z-index: 3; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.35); background: rgba(10,10,10,0.45); color: #fff; font-size: 17px; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+      .soon-body { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 20px 20px 22px; text-align: left; }
+      .soon-label { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 700; color: #ffffff; opacity: 0.92; }
+      .soon-title { font-size: 27px; font-weight: 800; letter-spacing: -0.01em; margin-top: 6px; color: #ffffff; }
+      .soon-pill { display: inline-block; margin-top: 14px; background: #ffffff; color: #0a0a0a; font-size: 13.5px; font-weight: 700; padding: 9px 18px; border-radius: 999px; }
       /* Latest auto-slider */
       .latest-slider { overflow: hidden; border-radius: 22px; background: linear-gradient(120deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04) 58%); -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); }
       .latest-track { display: flex; position: relative; transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform; }
@@ -916,6 +930,7 @@
     </div>
     <footer style="justify-content:center;">
       <span>&copy; 2026 Neo. All posts live on <a href="https://x.com/iamneo80" target="_blank" rel="noopener noreferrer">X</a>.</span>
+      <span id="pageviews" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg><span id="pv-num">0</span></span>
     </footer>
 
     <script>
@@ -1412,5 +1427,56 @@
         });
       })();
     </script>
-  </body>
+    <div class="soon-back" id="soonBack" role="dialog" aria-label="Coming soon">
+    <div class="soon-card">
+      <img class="poster" src="soon.jpg" alt="Hailey Rose NSFW Edit poster" />
+      <div class="soon-grad"></div>
+      <button class="soon-x" id="soonX" type="button" aria-label="Close">&times;</button>
+      <div class="soon-body">
+        <div class="soon-label">Coming soon</div>
+        <div class="soon-title">Hailey Rose NSFW Edit</div>
+        <span class="soon-pill">Tonight on X</span>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Coming Soon popup: once per day per visitor, only after the 18+ gate
+    (function () {
+      var back = document.getElementById("soonBack");
+      if (!back) return;
+      var today = new Date().toDateString();
+      function seen() { try { return localStorage.getItem("neo-soon-day") === today; } catch (e) { return false; } }
+      function mark() { try { localStorage.setItem("neo-soon-day", today); } catch (e) { } }
+      function gatePassed() { try { return sessionStorage.getItem("neo-age-ok") === "1"; } catch (e) { return false; } }
+      var queued = false;
+      function maybe() {
+        if (queued || seen() || !gatePassed()) return;
+        queued = true; mark();
+        setTimeout(function () { back.classList.add("open"); }, 700);
+      }
+      maybe();
+      var yes = document.getElementById("gate-yes");
+      if (yes) yes.addEventListener("click", function () { setTimeout(maybe, 650); });
+      function close() { back.classList.remove("open"); }
+      document.getElementById("soonX").addEventListener("click", close);
+      back.addEventListener("click", function (e) { if (e.target === back) close(); });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+    })();
+  </script>
+  <script>
+    // Page views (GoatCounter — cookie-free, no personal data)
+    (function () {
+      if (!window.fetch) return;
+      fetch("https://iamneo80.goatcounter.com/counter/TOTAL.json").then(function (r) { return r.json(); }).then(function (d) {
+        var n = parseInt(d && d.count, 10);
+        if (!isFinite(n)) return;
+        var num = document.getElementById("pv-num");
+        var wrap = document.getElementById("pageviews");
+        if (num) num.textContent = "" + n;
+        if (wrap) wrap.hidden = false;
+      }).catch(function () { });
+    })();
+  </script>
+  <script data-goatcounter="https://iamneo80.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
 </html>
