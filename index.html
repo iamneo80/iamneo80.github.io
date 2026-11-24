@@ -811,7 +811,7 @@
         <h2>Top posts</h2>
         <div class="tp-strip">
           <a class="post-card poster" data-name="insta vs reality (part-03)" href="https://x.com/iamneo80/status/2052163352231858537" target="_blank" rel="noopener noreferrer">
-            <span class="tp-badge million">1M views</span>
+            <span class="tp-badge million">2M views</span>
             <span class="tp-img"><picture><source srcset="top1.webp" type="image/webp" /><img src="top1.jpg" alt="INSTA vs REALITY (part-03) poster" width="720" height="1280" style="object-position: center 12%;" /></picture></span>
             <div class="tp-bottom"><p class="tp-title-in">INSTA vs REALITY (part-03)</p>
             <div class="post-meta">
@@ -1086,8 +1086,9 @@
                 var rt = parseInt(d.tweet.retweets, 10), rp2 = parseInt(d.tweet.replies, 10);
                 meta.innerHTML = EYE + fmtViews(v) + " \u00B7 " + HRT + fmtLikes(l) + " \u00B7 " + RPT + fmtLikes(isNaN(rt) ? 0 : rt) + " \u00B7 " + CMT + fmtLikes(isNaN(rp2) ? 0 : rp2);
                 var mb = card.querySelector(".tp-badge.million");
-                if (v >= 1000000 && !mb) { var s = document.createElement("span"); s.className = "tp-badge million"; s.textContent = "1M views"; card.appendChild(s); }
-                if (v < 1000000 && mb) mb.remove();
+                var mcount = Math.floor(v / 1000000);
+                if (mcount >= 1) { if (!mb) { mb = document.createElement("span"); mb.className = "tp-badge million"; card.appendChild(mb); } mb.textContent = mcount + "M views"; }
+                else if (mb) mb.remove();
               })
               .catch(function () { /* stored numbers stay */ });
           } catch (e) { /* stored numbers stay */ }
