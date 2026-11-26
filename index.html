@@ -760,9 +760,9 @@
       <p class="tagline anim d3">Posting on <strong>X</strong>. Nothing else!</p>
 
       <div class="stats anim d4" id="stats" aria-label="X statistics">
+        <div class="stat"><span class="num">369</span><span class="lbl">Following</span></div>
         <div class="stat"><span class="num">21K+</span><span class="lbl">Followers</span></div>
         <div class="stat"><span class="num">215</span><span class="lbl">Posts</span></div>
-        <div class="stat"><span class="num">1.7M+</span><span class="lbl">Views</span></div>
       </div>
 
 
@@ -774,9 +774,9 @@
       </section>
 
       <div class="stats-plain rv" aria-label="Statistics in full">
+        <span>Following <b class="pnum" data-count="369">369</b></span>
         <span>Followers <b class="pnum" data-count="21672">21672</b></span>
         <span>Posts <b class="pnum" data-count="215">215</b></span>
-        <span>Viewers <b class="pnum" data-count="1737687">1737687</b></span>
       </div>
 
 
@@ -1009,23 +1009,24 @@
       })();
     </script>
     <script>
-      // Live X stats: followers + posts refresh automatically from the public
-      // FxTwitter API. Views stay manual (they exist only in Neo's private X
-      // Analytics). If the API is unreachable, the built-in numbers stay.
+      // Live X stats: following + followers + posts refresh automatically
+      // from the public FxTwitter API. If the API is unreachable, the
+      // built-in numbers stay.
       (function () {
         function abbrev(n) {
           if (n >= 1000000) { var v = Math.floor(n / 100000) / 10; return (v % 1 === 0 ? v.toFixed(0) : String(v)) + "M+"; }
           if (n >= 1000) return Math.floor(n / 1000) + "K+";
           return String(n);
         }
-        function apply(followers, posts) {
+        function apply(following, followers, posts) {
           var cardNums = document.querySelectorAll(".stats .stat .num");
-          if (cardNums.length >= 2) { cardNums[0].textContent = abbrev(followers); cardNums[1].textContent = String(posts); }
+          if (cardNums.length >= 3) { cardNums[0].textContent = abbrev(following); cardNums[1].textContent = abbrev(followers); cardNums[2].textContent = String(posts); }
           var pnums = document.querySelectorAll(".stats-plain .pnum");
-          if (pnums.length >= 2) {
-            pnums[0].setAttribute("data-count", followers); pnums[0].textContent = String(followers);
-            pnums[1].setAttribute("data-count", posts); pnums[1].textContent = String(posts);
-            setTimeout(function () { pnums[0].textContent = String(followers); pnums[1].textContent = String(posts); }, 1800);
+          if (pnums.length >= 3) {
+            pnums[0].setAttribute("data-count", following); pnums[0].textContent = String(following);
+            pnums[1].setAttribute("data-count", followers); pnums[1].textContent = String(followers);
+            pnums[2].setAttribute("data-count", posts); pnums[2].textContent = String(posts);
+            setTimeout(function () { pnums[0].textContent = String(following); pnums[1].textContent = String(followers); pnums[2].textContent = String(posts); }, 1800);
           }
         }
         try {
@@ -1035,9 +1036,9 @@
             .then(function (r) { return r.json(); })
             .then(function (d) {
               if (!d || !d.user) return;
-              var f = parseInt(d.user.followers, 10), t = parseInt(d.user.tweets, 10);
-              if (isNaN(f) || isNaN(t) || f < 1000 || t < 1) return;
-              apply(f, t);
+              var g = parseInt(d.user.following, 10), f = parseInt(d.user.followers, 10), t = parseInt(d.user.tweets, 10);
+              if (isNaN(g) || isNaN(f) || isNaN(t) || g < 0 || f < 1000 || t < 1) return;
+              apply(g, f, t);
             })
             .catch(function () { /* API unavailable - built-in numbers stay */ });
         } catch (e) { /* no fetch - built-in numbers stay */ }
