@@ -676,7 +676,12 @@
       #pageviews { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 12.5px; margin-left: 14px; }
       #pageviews[hidden] { display: none; }
       #pageviews svg { width: 14px; height: 14px; }
-      /* Latest auto-slider */
+      
+      .imp-line { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; padding: 11px 16px; border-radius: 999px; background: linear-gradient(120deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04) 58%); border: 1px solid rgba(255,255,255,0.16); font-size: 13.5px; color: var(--ink); }
+      .imp-line svg { width: 15px; height: 15px; flex: 0 0 auto; }
+      .imp-line b { font-weight: 800; }
+      .imp-line span { color: var(--muted); }
+/* Latest auto-slider */
       .latest-slider { overflow: hidden; border-radius: 22px; background: linear-gradient(120deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04) 58%); -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); }
       .latest-track { display: flex; position: relative; transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform; }
       .latest-track .latest-card { flex: 0 0 100%; min-width: 0; max-width: 100%; }
@@ -764,6 +769,7 @@
         <div class="stat"><span class="num">21K+</span><span class="lbl">Followers</span></div>
         <div class="stat"><span class="num">215</span><span class="lbl">Posts</span></div>
       </div>
+      <div class="imp-line anim d4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg><span><b>1,737,687</b> impressions in the last 7 days</span></div>
 
 
       <section class="about rv" id="about" aria-label="About" style="margin-top:36px;">
