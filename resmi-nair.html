@@ -322,6 +322,16 @@
           var s2 = (v / 1e3).toFixed(dec); if (dec === 2) s2 = s2.replace(/\.?0+$/, "");
           return s2 + "K";
         }
+        
+        function relC(ts) {
+          var d = Math.floor((Date.now() - ts) / 86400000);
+          if (isNaN(d) || d < 0) return "";
+          if (d === 0) return "now";
+          if (d < 30) return d + "d";
+          var mo = Math.floor(d / 30);
+          if (mo < 12) return mo + "mo";
+          return Math.floor(d / 365) + "y";
+        }
         items.forEach(function (a) {
           var m = /status\/(\d+)/.exec(a.getAttribute("href") || a.getAttribute("data-href") || "");
           if (!m) return;
@@ -333,6 +343,8 @@
             if (t) {
               if (typeof t.views === "number" && t.views > 0) { a.setAttribute("data-views", t.views); vw.textContent = fmt(t.views, 1); ok = true; }
               if (typeof t.likes === "number" && t.likes > 0) { lk.textContent = t.likes < 1000 ? String(t.likes) : fmt(t.likes, 2); ok = true; }
+              var ts3 = Date.parse(t.created_at || ""); var r3 = isNaN(ts3) ? "" : relC(ts3);
+              if (r3) { var sep3 = document.createElement("span"); sep3.className = "sep"; sep3.textContent = "\u00B7"; meta.appendChild(sep3); var dt3 = document.createElement("span"); dt3.className = "dt"; dt3.textContent = r3; meta.appendChild(dt3); }
             }
             if (!ok) meta.style.display = "none";
           }).catch(function () { meta.style.display = "none"; });
